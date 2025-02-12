@@ -4,9 +4,49 @@ import { WEB_NAME } from "@quanlysanbong/constants/MainContent";
 import CarouselComponent from "./CarouselComponent";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const HeaderComponent = () => {
   const pathUrl = usePathname();
+
+  useEffect(() => {
+    setTimeout(() => {
+      const backToTopButton = document.querySelector(".back-to-top");
+      backToTopButton.style.display = "none"; // Ẩn button "back to top"
+      window.addEventListener("scroll", function () {
+        var navbar = document.querySelector(".navbar");
+        if (window.scrollY > 45) {
+          navbar.classList.add("sticky-top", "shadow-sm");
+        } else {
+          navbar.classList.remove("sticky-top", "shadow-sm");
+        }
+      });
+
+      // Kiểm tra khi người dùng cuộn trang
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 300) {
+          backToTopButton.style.display = "flex"; // Hiện button "back to top"
+        } else {
+          backToTopButton.style.display = "none"; // Ẩn button "back to top"
+        }
+      });
+      backToTopButton.addEventListener("click", function (event) {
+        event.preventDefault(); // Ngừng hành động mặc định của nút
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth" // Cuộn lên đầu trang với hiệu ứng mượt mà
+        });
+      });
+    }, 1);
+  }, []);
+
+  useEffect(() => {
+    // scroll to top
+    window.scrollTo(0, 0);
+    // close #navbarCollapse
+    const navbarCollapse = document.getElementById("navbarCollapse");
+    navbarCollapse.classList.remove("show");
+  }, [pathUrl]);
 
   return (
     <div className="container-fluid position-relative p-0">
@@ -41,25 +81,6 @@ const HeaderComponent = () => {
         </div>
       </nav>
       <CarouselComponent pathUrl={pathUrl} />
-      {/* {pathUrl === "/" ? (
-        <CarouselComponent />
-      ) : (
-        <div className="container-fluid bg-breadcrumb">
-          <div className="container text-center py-5" style={{ maxWidth: "900px" }}>
-            <h4 className="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">
-              {LinkName.find((item) => item.path === pathUrl).name}
-            </h4>
-            <ol className="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
-              <li className="breadcrumb-item">
-                <Link href="/">Trang chủ</Link>
-              </li>
-              <li className="breadcrumb-item active text-primary">
-                {LinkName.find((item) => item.path === pathUrl).name}
-              </li>
-            </ol>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };

@@ -38,19 +38,6 @@ export default function AboutPage() {
       <a href="#" className="btn btn-primary btn-lg-square rounded-circle back-to-top">
         <i className="fa fa-arrow-up"></i>
       </a>
-
-      <Script
-        strategy="beforeInteractive"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
-      />
-      <Script strategy="beforeInteractive" src="./lib/wow/wow.min.js" />
-      <Script strategy="beforeInteractive" src="./lib/easing/easing.min.js" />
-      <Script strategy="beforeInteractive" src="./lib/waypoints/waypoints.min.js" />
-      <Script strategy="beforeInteractive" src="./lib/counterup/counterup.min.js" />
-      <Script strategy="beforeInteractive" src="./lib/lightbox/js/lightbox.min.js" />
-      <Script strategy="beforeInteractive" src="./lib/owlcarousel/owl.carousel.min.js" />
-
-      <Script src="./lib/main.js" strategy="afterInteractive" />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import Script from "next/script";
 import FooterComponent from "./(marketing)/components/FooterComponent";
 import HeaderComponent from "./(marketing)/components/HeaderComponent";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 export default function RootLayout({ children }) {
   return (
@@ -8,7 +9,6 @@ export default function RootLayout({ children }) {
       <head>
         {/* favicon */}
         <link rel="icon" href="./img/icon.png" />
-        <Script strategy="beforeInteractive" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:wght@400;500;700;900&display=swap"
           rel="stylesheet"
@@ -21,6 +21,12 @@ export default function RootLayout({ children }) {
         <link href="./lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
 
         <link href="./lib/css/bootstrap.min.css" rel="stylesheet" />
+
+        <Script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossOrigin="anonymous"
+        />
 
         <link href="./lib/css/style.css" rel="stylesheet" />
       </head>
