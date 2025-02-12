@@ -1,8 +1,14 @@
 export const WEB_NAME = "Sân bóng việt";
 
+export const MAIN_URL_APP = "localhost:3000";
+
 export const VIDEO_LINK = "https://www.youtube.com/watch?v=Ig8IU9vsPo4";
 
 export const PHONE_NUMBER = "+01234567890";
+
+export const EMAIL = "thuebongda@gmail.com";
+
+export const ADDRESS = "123 Đường Phố, Thành phố H, Việt Nam";
 
 export const OUR_TEAM = [
   {

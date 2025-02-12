@@ -1,8 +1,13 @@
+"use client";
+
 import { WEB_NAME } from "@quanlysanbong/constants/MainContent";
 import CarouselComponent from "./CarouselComponent";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const HeaderComponent = () => {
+  const pathUrl = usePathname();
+
   return (
     <div className="container-fluid position-relative p-0">
       <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
@@ -17,16 +22,16 @@ const HeaderComponent = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav ms-auto py-0">
-            <Link href="/" className="nav-item nav-link active">
+            <Link href="/" className={`nav-item nav-link ${pathUrl === "/" ? "active" : ""}`}>
               Trang chủ
             </Link>
-            <Link href="/gioi-thieu" className="nav-item nav-link">
+            <Link href="/gioi-thieu" className={`nav-item nav-link ${pathUrl === "/gioi-thieu" ? "active" : ""}`}>
               Giới thiệu
             </Link>
-            <Link href="/san-bong" className="nav-item nav-link">
+            <Link href="/san-bong" className={`nav-item nav-link ${pathUrl === "/san-bong" ? "active" : ""}`}>
               Danh sách sân bóng
             </Link>
-            <Link href="/lien-he" className="nav-item nav-link">
+            <Link href="/lien-he" className={`nav-item nav-link ${pathUrl === "/lien-he" ? "active" : ""}`}>
               Liên hệ
             </Link>
           </div>
@@ -35,8 +40,26 @@ const HeaderComponent = () => {
           </Link>
         </div>
       </nav>
-
-      <CarouselComponent />
+      <CarouselComponent pathUrl={pathUrl} />
+      {/* {pathUrl === "/" ? (
+        <CarouselComponent />
+      ) : (
+        <div className="container-fluid bg-breadcrumb">
+          <div className="container text-center py-5" style={{ maxWidth: "900px" }}>
+            <h4 className="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">
+              {LinkName.find((item) => item.path === pathUrl).name}
+            </h4>
+            <ol className="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+              <li className="breadcrumb-item">
+                <Link href="/">Trang chủ</Link>
+              </li>
+              <li className="breadcrumb-item active text-primary">
+                {LinkName.find((item) => item.path === pathUrl).name}
+              </li>
+            </ol>
+          </div>
+        </div>
+      )} */}
     </div>
   );
 };

@@ -1,7 +1,105 @@
+/* eslint-disable no-undef */
 import { VIDEO_LINK, WEB_NAME } from "@quanlysanbong/constants/MainContent";
 import Link from "next/link";
+import { useEffect } from "react";
 
-const CarouselComponent = () => {
+const LinkName = [
+  { name: "Trang chủ", path: "/" },
+  { name: "Giới thiệu", path: "/gioi-thieu" },
+  { name: "Danh sách sân bóng", path: "/san-bong" },
+  { name: "Liên hệ", path: "/lien-he" }
+];
+
+const CarouselComponent = ({ pathUrl }) => {
+  useEffect(() => {
+    // Set a timeout of 1 second (1000ms) before initializing the carousels
+    let timeoutId;
+    if (pathUrl === "/") {
+      timeoutId = setTimeout(() => {
+        // Hero Header carousel
+        $(".header-carousel").owlCarousel({
+          animateOut: "fadeOut",
+          items: 1,
+          margin: 0,
+          stagePadding: 0,
+          autoplay: true,
+          smartSpeed: 500,
+          dots: true,
+          loop: true,
+          nav: true,
+          navText: ['<i class="bi bi-arrow-left"></i>', '<i class="bi bi-arrow-right"></i>']
+        });
+
+        // Attractions carousel
+        $(".blog-carousel").owlCarousel({
+          autoplay: true,
+          smartSpeed: 1500,
+          center: false,
+          dots: false,
+          loop: true,
+          margin: 25,
+          nav: true,
+          navText: ['<i class="fa fa-angle-right"></i>', '<i class="fa fa-angle-left"></i>'],
+          responsiveClass: true,
+          responsive: {
+            0: { items: 1 },
+            576: { items: 1 },
+            768: { items: 2 },
+            992: { items: 2 },
+            1200: { items: 3 }
+          }
+        });
+
+        // Testimonial carousel
+        $(".testimonial-carousel").owlCarousel({
+          autoplay: true,
+          smartSpeed: 1500,
+          center: false,
+          dots: true,
+          loop: true,
+          margin: 25,
+          nav: true,
+          navText: ['<i class="fa fa-angle-right"></i>', '<i class="fa fa-angle-left"></i>'],
+          responsiveClass: true,
+          responsive: {
+            0: { items: 1 },
+            576: { items: 1 },
+            768: { items: 2 },
+            992: { items: 2 },
+            1200: { items: 3 }
+          }
+        });
+      }, 30); // 1 second delay
+    }
+
+    // Cleanup function to destroy carousels if the component is unmounted
+    return () => {
+      clearTimeout(timeoutId);
+      $(".header-carousel").trigger("destroy.owl.carousel");
+      $(".blog-carousel").trigger("destroy.owl.carousel");
+      $(".testimonial-carousel").trigger("destroy.owl.carousel");
+    };
+  }, [pathUrl]);
+
+  if (pathUrl !== "/") {
+    return (
+      <div className="container-fluid bg-breadcrumb">
+        <div className="container text-center py-5" style={{ maxWidth: "900px" }}>
+          <h4 className="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">
+            {LinkName.find((item) => item.path === pathUrl).name}
+          </h4>
+          <ol className="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+            <li className="breadcrumb-item">
+              <Link href="/">Trang chủ</Link>
+            </li>
+            <li className="breadcrumb-item active text-primary">
+              {LinkName.find((item) => item.path === pathUrl).name}
+            </li>
+          </ol>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="header-carousel owl-carousel">
       <div className="header-carousel-item">

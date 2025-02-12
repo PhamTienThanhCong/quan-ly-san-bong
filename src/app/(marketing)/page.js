@@ -7,11 +7,28 @@ import OurOfferComponent from "./components/OurOfferComponent";
 import FAQsComponent from "./components/FAQsComponent";
 import OurTeamComponent from "./components/OurTeamComponent";
 import TestimonialComponent from "./components/TestimonialComponent";
+import META_DATA from "./metaData";
+
+export const metadata = {
+  title: `${META_DATA.TITLE}`,
+  description: META_DATA.DESCRIPTION,
+  applicationName: META_DATA.APPLICATION_NAME,
+  keywords: META_DATA.KEYWORDS,
+  robots: META_DATA.ROBOTS,
+  openGraph: {
+    title: META_DATA.TITLE,
+    description: META_DATA.DESCRIPTION,
+    images: META_DATA.IMAGE,
+    type: "website",
+    url: META_DATA.URL
+  }
+};
 
 export default function Home() {
   return (
-    <>
+    <div>
       <AboutUsComponent />
+
       <div className="container-fluid service pb-5">
         <div className="container pb-5">
           <div className="text-center mx-auto pb-3 wow fadeInUp" data-wow-delay="0.2s" style={{ maxWidth: "800px" }}>
@@ -152,16 +169,18 @@ export default function Home() {
         <i className="fa fa-arrow-up"></i>
       </a>
 
-      <Script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" />
-      <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" />
-      <Script src="./lib/wow/wow.min.js" />
-      <Script src="./lib/easing/easing.min.js" />
-      <Script src="./lib/waypoints/waypoints.min.js" />
-      <Script src="./lib/counterup/counterup.min.js" />
-      <Script src="./lib/lightbox/js/lightbox.min.js" />
-      <Script src="./lib/owlcarousel/owl.carousel.min.js" />
+      <Script
+        strategy="beforeInteractive"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+      />
+      <Script strategy="beforeInteractive" src="./lib/wow/wow.min.js" />
+      <Script strategy="beforeInteractive" src="./lib/easing/easing.min.js" />
+      <Script strategy="beforeInteractive" src="./lib/waypoints/waypoints.min.js" />
+      <Script strategy="beforeInteractive" src="./lib/counterup/counterup.min.js" />
+      <Script strategy="beforeInteractive" src="./lib/lightbox/js/lightbox.min.js" />
+      <Script strategy="beforeInteractive" src="./lib/owlcarousel/owl.carousel.min.js" />
 
-      <Script src="./lib/main.js" />
-    </>
+      <Script src="./lib/main.js" strategy="afterInteractive" />
+    </div>
   );
 }
