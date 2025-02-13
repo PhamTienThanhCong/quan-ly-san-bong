@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import "@quanlysanbong/styles/style.css";
-import Script from "next/script";
 import META_DATA from "./metaData";
-import { ADDRESS, EMAIL, MAIN_URL_APP, PHONE_NUMBER } from "@quanlysanbong/constants/MainContent";
-import ContactFormComponent from "../components/ContactFormComponent";
 import Link from "next/link";
+import SignUpComponent from "./SignUpComponent";
 
 export const metadata = {
   title: `${META_DATA.TITLE}`,
@@ -21,60 +19,10 @@ export const metadata = {
   }
 };
 
-export default function LoginPage() {
+export default function SignUpPage() {
   return (
     <>
-      <div className="container-fluid py-5">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-md-6">
-              <div className="card shadow-sm">
-                <div className="card-body">
-                  <form>
-                    <div className="mb-3">
-                      <label htmlFor="email" className="form-label">
-                        Tài khoản Email
-                      </label>
-                      <input type="email" className="form-control" id="email" placeholder="Enter your email" required />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="password" className="form-label">
-                        Mật khẩu
-                      </label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        id="password"
-                        placeholder="Enter your password"
-                        required
-                      />
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="rememberMe" />
-                        <label className="form-check-label" htmlFor="rememberMe">
-                          Ghi nhớ đăng nhập
-                        </label>
-                      </div>
-                      <a href="#" className="text-decoration-none">
-                        Quên mật khẩu?
-                      </a>
-                    </div>
-                    <button type="submit" className="btn btn-primary w-100 mt-3">
-                      Đăng nhập
-                    </button>
-
-                    {/* Nếu bạn chưa có tài khoản */}
-                    <p className="text-center mt-3">
-                      Bạn chưa có tài khoản? <Link href="/dang-ky">Đăng ký ngay</Link>
-                    </p>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SignUpComponent />
 
       <a href="#" className="btn btn-primary btn-lg-square rounded-circle back-to-top">
         <i className="fa fa-arrow-up"></i>
