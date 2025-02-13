@@ -1,6 +1,6 @@
 import "@quanlysanbong/styles/style.css";
 import META_DATA from "./metaData";
-import SanBongModal from "./SanBongModal";
+import SanBongDetail from "./SanBongDetail";
 
 export const metadata = {
   title: `${META_DATA.TITLE}`,
@@ -18,5 +18,5 @@ export const metadata = {
 };
 
 export default function SanBongPage() {
-  return <SanBongModal />;
+  return <SanBongDetail />;
 }

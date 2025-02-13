@@ -275,12 +275,12 @@
 /*** Navbar End ***/
 
 /*** Carousel Hero Header Start ***/
-.swiper img {
+.header-container .swiper img {
     object-fit: cover;
 }
 
-.swiper,
-.swiper img {
+.header-container .swiper,
+.header-container .swiper img {
         height: 700px;
 }
 
@@ -317,7 +317,7 @@
 }
 
 
-.swiper .carousel-caption {
+.header-container .swiper .carousel-caption {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -330,7 +330,7 @@
 }
 
 @media (max-width: 991px) {
-    .swiper .carousel-caption {
+    .header-container .swiper .carousel-caption {
         padding-top: 45px;
     }
 }
@@ -351,7 +351,7 @@
 }
 
 
-.swiper img {
+.header-container .swiper img {
     animation-name: image-zoom;
     animation-duration: 10s;
     animation-delay: 1s;
@@ -909,4 +909,17 @@
 }
 /*** copyright end ***/
 
+.img-san-bong{
+    max-height: 400px;
+    object-fit: cover;
+}
 
+/*** Responsive Start ***/
+@media (max-width: 767px) {
+    .img-san-bong {
+        max-height: 200px;
+    }
+    .bg-breadcrumb{
+        padding: 0 !important;
+    }
+}

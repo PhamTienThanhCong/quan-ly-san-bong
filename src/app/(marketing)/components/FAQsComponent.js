@@ -1,14 +1,8 @@
 "use client";
 import { Accordion, Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import WOW from "wow.js";
-import { useEffect } from "react";
 
 const FAQsComponent = () => {
-  // useEffect(() => {
-  //   new WOW().init();
-  // }, []);
-
   const faqs = [
     {
       question: "Làm thế nào để đặt sân?",

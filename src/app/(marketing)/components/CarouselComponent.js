@@ -15,17 +15,29 @@ const LinkName = [
 
 const CarouselComponent = ({ pathUrl }) => {
   if (pathUrl !== "/") {
+    let NameStadium = LinkName.find((item) => item.path === pathUrl)?.name || "";
+    let parentPath = null;
+    if (pathUrl.includes("/san-bong/")) {
+      NameStadium = "Chi Tiết Sân Bóng";
+      parentPath = {
+        name: "Danh sách sân bóng",
+        path: "/san-bong"
+      };
+    }
     return (
       <div className="container-fluid bg-breadcrumb">
         <div className="container text-center py-5" style={{ maxWidth: "900px" }}>
-          <h4 className="text-white display-4 mb-4">{LinkName.find((item) => item.path === pathUrl)?.name}</h4>
+          <h4 className="text-white display-4 mb-4">{NameStadium}</h4>
           <ol className="breadcrumb d-flex justify-content-center mb-0">
             <li className="breadcrumb-item">
               <Link href="/">Trang chủ</Link>
             </li>
-            <li className="breadcrumb-item active text-primary">
-              {LinkName.find((item) => item.path === pathUrl)?.name}
-            </li>
+            {parentPath && (
+              <li className="breadcrumb-item">
+                <Link href={parentPath.path}>{parentPath.name}</Link>
+              </li>
+            )}
+            <li className="breadcrumb-item active text-primary">{NameStadium}</li>
           </ol>
         </div>
       </div>

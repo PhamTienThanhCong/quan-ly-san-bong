@@ -37,7 +37,7 @@ const HeaderComponent = () => {
           behavior: "smooth" // Cuộn lên đầu trang với hiệu ứng mượt mà
         });
       });
-    }, 1);
+    }, 10);
   }, []);
 
   useEffect(() => {
@@ -49,11 +49,11 @@ const HeaderComponent = () => {
   }, [pathUrl]);
 
   return (
-    <div className="container-fluid position-relative p-0">
+    <div className="container-fluid position-relative p-0 header-container">
       <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
         <a href="" className="navbar-brand p-0">
           <h1 className="text-primary">
-            <img src="./img/logo.png" className="me-3" alt="Logo" style={{ height: "50px" }} />
+            <img src="/img/logo.png" className="me-3" alt="Logo" style={{ height: "50px" }} />
             {WEB_NAME}
           </h1>
         </a>

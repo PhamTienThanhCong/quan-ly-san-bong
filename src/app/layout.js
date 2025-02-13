@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* favicon */}
         <link rel="icon" href="./img/icon.png" />
@@ -17,10 +17,10 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 
-        <link href="./lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
-        <link href="./lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+        <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+        <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
 
-        <link href="./lib/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/lib/css/bootstrap.min.css" rel="stylesheet" />
 
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
 
-        <link href="./lib/css/style.css" rel="stylesheet" />
+        <link href="/lib/css/style.css" rel="stylesheet" />
       </head>
       <body>
         <div>

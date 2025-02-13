@@ -1,4 +1,51 @@
+import Image from "next/image";
+
 const TestimonialComponent = () => {
+  const testimonials = [
+    {
+      id: 1,
+      name: "Nguyễn Văn A",
+      role: "Cầu Thủ Nghiệp Dư",
+      text: "Dịch vụ đặt sân cực kỳ nhanh chóng và tiện lợi. Sân bóng chất lượng, đội ngũ hỗ trợ nhiệt tình. Tôi rất hài lòng!",
+      image: "/img/testimonial-1.jpg",
+      stars: 5
+    },
+    {
+      id: 2,
+      name: "Trần Thị B",
+      role: "Người Yêu Thể Thao",
+      text: "Hệ thống đặt sân dễ sử dụng, nhiều khung giờ trống để lựa chọn. Tôi đã giới thiệu cho bạn bè cùng sử dụng.",
+      image: "/img/testimonial-2.jpg",
+      stars: 4.5
+    },
+    {
+      id: 3,
+      name: "Lê Văn C",
+      role: "Huấn Luyện Viên Bóng Đá",
+      text: "Sân bóng đẹp, sạch sẽ, đặt sân nhanh chóng mà không cần phải gọi điện nhiều lần. Rất đáng để trải nghiệm!",
+      image: "/img/testimonial-3.jpg",
+      stars: 5
+    }
+  ];
+
+  const renderStars = (stars) => {
+    const fullStars = Math.floor(stars);
+    const halfStar = stars % 1 !== 0;
+
+    const starElements = [];
+    for (let i = 0; i < fullStars; i++) {
+      starElements.push(<i key={`full-star-${i}`} className="fas fa-star"></i>);
+    }
+    if (halfStar) {
+      starElements.push(<i key="half-star" className="fas fa-star-half-alt"></i>);
+    }
+    while (starElements.length < 5) {
+      starElements.push(<i key={`empty-star-${starElements.length}`} className="fas fa-star"></i>);
+    }
+
+    return starElements;
+  };
+
   return (
     <div className="container-fluid testimonial pb-5">
       <div className="container pb-5">
@@ -10,97 +57,38 @@ const TestimonialComponent = () => {
             Chúng tôi luôn cam kết mang lại trải nghiệm tốt nhất cho mọi người chơi.
           </p>
         </div>
-        <div className="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.2s">
-          <div className="testimonial-item">
-            <div className="testimonial-quote-left">
-              <i className="fas fa-quote-left fa-2x"></i>
-            </div>
-            <div className="testimonial-img">
-              <img src="img/testimonial-1.jpg" className="img-fluid" alt="Image" />
-            </div>
-            <div className="testimonial-text">
-              <p className="mb-0">
-                "Dịch vụ đặt sân cực kỳ nhanh chóng và tiện lợi. Sân bóng chất lượng, đội ngũ hỗ trợ nhiệt tình. Tôi rất
-                hài lòng!"
-              </p>
-            </div>
-            <div className="testimonial-title">
-              <div>
-                <h4 className="mb-0">Nguyễn Văn A</h4>
-                <p className="mb-0">Cầu Thủ Nghiệp Dư</p>
-              </div>
-              <div className="d-flex text-primary">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </div>
-            </div>
-            <div className="testimonial-quote-right">
-              <i className="fas fa-quote-right fa-2x"></i>
-            </div>
-          </div>
-          <div className="testimonial-item">
-            <div className="testimonial-quote-left">
-              <i className="fas fa-quote-left fa-2x"></i>
-            </div>
-            <div className="testimonial-img">
-              <img src="img/testimonial-2.jpg" className="img-fluid" alt="Image" />
-            </div>
-            <div className="testimonial-text">
-              <p className="mb-0">
-                "Hệ thống đặt sân dễ sử dụng, nhiều khung giờ trống để lựa chọn. Tôi đã giới thiệu cho bạn bè cùng sử
-                dụng."
-              </p>
-            </div>
-            <div className="testimonial-title">
-              <div>
-                <h4 className="mb-0">Trần Thị B</h4>
-                <p className="mb-0">Người Yêu Thể Thao</p>
-              </div>
-              <div className="d-flex text-primary">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star-half-alt"></i>
+        <div className="row justify-content-center">
+          {testimonials.map((testimonial) => (
+            <div key={testimonial.id} className="col-lg-4 col-md-6 col-12 mb-4">
+              <div className="testimonial-item">
+                <div className="testimonial-quote-left">
+                  <i className="fas fa-quote-left fa-2x"></i>
+                </div>
+                <div className="testimonial-img">
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    width={100}
+                    height={100}
+                    className="img-fluid rounded-circle"
+                  />
+                </div>
+                <div className="testimonial-text">
+                  <p className="mb-0">{testimonial.text}</p>
+                </div>
+                <div className="testimonial-title">
+                  <div>
+                    <h4 className="mb-0">{testimonial.name}</h4>
+                    <p className="mb-0">{testimonial.role}</p>
+                  </div>
+                  <div className="d-flex text-primary">{renderStars(testimonial.stars)}</div>
+                </div>
+                <div className="testimonial-quote-right">
+                  <i className="fas fa-quote-right fa-2x"></i>
+                </div>
               </div>
             </div>
-            <div className="testimonial-quote-right">
-              <i className="fas fa-quote-right fa-2x"></i>
-            </div>
-          </div>
-          <div className="testimonial-item">
-            <div className="testimonial-quote-left">
-              <i className="fas fa-quote-left fa-2x"></i>
-            </div>
-            <div className="testimonial-img">
-              <img src="img/testimonial-3.jpg" className="img-fluid" alt="Image" />
-            </div>
-            <div className="testimonial-text">
-              <p className="mb-0">
-                "Sân bóng đẹp, sạch sẽ, đặt sân nhanh chóng mà không cần phải gọi điện nhiều lần. Rất đáng để trải
-                nghiệm!"
-              </p>
-            </div>
-            <div className="testimonial-title">
-              <div>
-                <h4 className="mb-0">Lê Văn C</h4>
-                <p className="mb-0">Huấn Luyện Viên Bóng Đá</p>
-              </div>
-              <div className="d-flex text-primary">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </div>
-            </div>
-            <div className="testimonial-quote-right">
-              <i className="fas fa-quote-right fa-2x"></i>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
