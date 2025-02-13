@@ -10,7 +10,9 @@ const LinkName = [
   { name: "Trang chủ", path: "/" },
   { name: "Giới thiệu", path: "/gioi-thieu" },
   { name: "Danh sách sân bóng", path: "/san-bong" },
-  { name: "Liên hệ", path: "/lien-he" }
+  { name: "Liên hệ", path: "/lien-he" },
+  { name: "Đăng nhập", path: "/dang-nhap" },
+  { name: "Đăng ký", path: "/dang-ky" }
 ];
 
 const CarouselComponent = ({ pathUrl }) => {
