@@ -8,6 +8,7 @@ import FAQsComponent from "./components/FAQsComponent";
 import OurTeamComponent from "./components/OurTeamComponent";
 import TestimonialComponent from "./components/TestimonialComponent";
 import META_DATA from "./metaData";
+import BoxFieldComponent from "./components/BoxFieldComponent";
 
 export const metadata = {
   title: `${META_DATA.TITLE}`,
@@ -24,133 +25,72 @@ export const metadata = {
   }
 };
 
+const fields = [
+  {
+    id: 1,
+    name: "Sân Bóng 1",
+    image: "/img/offer-1.jpg",
+    location: "Hà Nội A",
+    status: { available: 7, total: 7 }, // 7/7
+    owner: "Nguyễn Văn A"
+  },
+  {
+    id: 2,
+    name: "Sân Bóng 2",
+    image: "/img/offer-2.jpg",
+    location: "Hà Nội B",
+    status: { available: 5, total: 7 }, // 5/7
+    owner: "Trần Thị B"
+  },
+  {
+    id: 3,
+    name: "Sân Bóng 3",
+    image: "/img/offer-3.jpg",
+    location: "Hà Nội B",
+    status: { available: 5, total: 7 }, // 5/7
+    owner: "Trần Thị B"
+  },
+  {
+    id: 4,
+    name: "Sân Bóng 4",
+    image: "/img/offer-4.jpg",
+    location: "Hà Nội B",
+    status: { available: 5, total: 7 }, // 5/7
+    owner: "Trần Thị B"
+  },
+  {
+    id: 5,
+    name: "Sân Bóng 5",
+    image: "/img/offer-1.jpg",
+    location: "Hà Nội B",
+    status: { available: 5, total: 7 }, // 5/7
+    owner: "Trần Thị B"
+  },
+  {
+    id: 6,
+    name: "Sân Bóng 6",
+    image: "/img/offer-2.jpg",
+    location: "Hà Nội B",
+    status: { available: 5, total: 7 }, // 5/7
+    owner: "Trần Thị B"
+  }
+  // Add more fields here
+];
 export default function Home() {
   return (
     <div>
       <AboutUsComponent />
 
       <div className="container-fluid service pb-5">
-        <div className="container pb-5">
+        <div className="container">
           <div className="text-center mx-auto pb-3 wow fadeInUp" data-wow-delay="0.2s" style={{ maxWidth: "800px" }}>
             <h4 className="text-primary">Sân bóng phổ biến</h4>
             <h1 className="display-5">Các sân bóng phổ biến tại Hà Nội</h1>
           </div>
-          <div className="row g-4">
-            <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-1.jpg" className="img-fluid rounded-top w-100" alt="Image" />
-                </div>
-                <div className="rounded-bottom p-4">
-                  <a href="#" className="h4 d-inline-block mb-4">
-                    {" "}
-                    Strategy Consulting
-                  </a>
-                  <p className="mb-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sint? Excepturi facilis neque
-                    nesciunt similique officiis veritatis,
-                  </p>
-                  <a className="btn btn-primary rounded-pill py-2 px-4" href="#">
-                    Learn More
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-2.jpg" className="img-fluid rounded-top w-100" alt="Image" />
-                </div>
-                <div className="rounded-bottom p-4">
-                  <a href="#" className="h4 d-inline-block mb-4">
-                    Financial Advisory
-                  </a>
-                  <p className="mb-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sint? Excepturi facilis neque
-                    nesciunt similique officiis veritatis,
-                  </p>
-                  <a className="btn btn-primary rounded-pill py-2 px-4" href="#">
-                    Learn More
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-3.jpg" className="img-fluid rounded-top w-100" alt="Image" />
-                </div>
-                <div className="rounded-bottom p-4">
-                  <a href="#" className="h4 d-inline-block mb-4">
-                    Managements
-                  </a>
-                  <p className="mb-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sint? Excepturi facilis neque
-                    nesciunt similique officiis veritatis,
-                  </p>
-                  <a className="btn btn-primary rounded-pill py-2 px-4" href="#">
-                    Learn More
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-4.jpg" className="img-fluid rounded-top w-100" alt="Image" />
-                </div>
-                <div className="rounded-bottom p-4">
-                  <a href="#" className="h4 d-inline-block mb-4">
-                    Supply Optimization
-                  </a>
-                  <p className="mb-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sint? Excepturi facilis neque
-                    nesciunt similique officiis veritatis,
-                  </p>
-                  <a className="btn btn-primary rounded-pill py-2 px-4" href="#">
-                    Learn More
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-5.jpg" className="img-fluid rounded-top w-100" alt="Image" />
-                </div>
-                <div className="rounded-bottom p-4">
-                  <a href="#" className="h4 d-inline-block mb-4">
-                    Hr Consulting
-                  </a>
-                  <p className="mb-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sint? Excepturi facilis neque
-                    nesciunt similique officiis veritatis,
-                  </p>
-                  <a className="btn btn-primary rounded-pill py-2 px-4" href="#">
-                    Learn More
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-6.jpg" className="img-fluid rounded-top w-100" alt="Image" />
-                </div>
-                <div className="rounded-bottom p-4">
-                  <a href="#" className="h4 d-inline-block mb-4">
-                    Marketing Consulting
-                  </a>
-                  <p className="mb-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sint? Excepturi facilis neque
-                    nesciunt similique officiis veritatis,
-                  </p>
-                  <a className="btn btn-primary rounded-pill py-2 px-4" href="#">
-                    Learn More
-                  </a>
-                </div>
-              </div>
-            </div>
+          <div className="row g-3">
+            {fields.map((field) => (
+              <BoxFieldComponent key={field.id} field={field} />
+            ))}
           </div>
         </div>
       </div>

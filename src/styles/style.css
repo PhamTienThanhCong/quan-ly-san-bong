@@ -914,6 +914,11 @@
     object-fit: cover;
 }
 
+.img-the-san-bong{
+    height: 200px;
+    object-fit: cover;
+}
+
 /*** Responsive Start ***/
 @media (max-width: 767px) {
     .img-san-bong {
@@ -921,5 +926,8 @@
     }
     .bg-breadcrumb{
         padding: 0 !important;
+    }
+    .img-the-san-bong{
+        height: 180px;
     }
 }

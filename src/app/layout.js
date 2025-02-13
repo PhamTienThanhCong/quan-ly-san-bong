@@ -30,13 +30,7 @@ export default function RootLayout({ children }) {
 
         <link href="/lib/css/style.css" rel="stylesheet" />
       </head>
-      <body>
-        <div>
-          <HeaderComponent />
-          {children}
-          <FooterComponent />
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

@@ -3,13 +3,14 @@
 import { useState } from "react";
 import SearchAddressComponent from "../components/SearchAddressComponent";
 import Link from "next/link";
+import BoxFieldComponent from "../components/BoxFieldComponent";
 
 // Dummy data for fields
 const fields = [
   {
     id: 1,
     name: "Sân Bóng 1",
-    image: "/img/service-2.jpg",
+    image: "/img/offer-1.jpg",
     location: "Hà Nội A",
     status: { available: 7, total: 7 }, // 7/7
     owner: "Nguyễn Văn A"
@@ -17,23 +18,39 @@ const fields = [
   {
     id: 2,
     name: "Sân Bóng 2",
-    image: "/img/service-2.jpg",
+    image: "/img/offer-2.jpg",
     location: "Hà Nội B",
     status: { available: 5, total: 7 }, // 5/7
     owner: "Trần Thị B"
   },
   {
     id: 3,
-    name: "Sân Bóng 2",
-    image: "/img/service-2.jpg",
+    name: "Sân Bóng 3",
+    image: "/img/offer-3.jpg",
     location: "Hà Nội B",
     status: { available: 5, total: 7 }, // 5/7
     owner: "Trần Thị B"
   },
   {
     id: 4,
-    name: "Sân Bóng 2",
-    image: "/img/service-2.jpg",
+    name: "Sân Bóng 4",
+    image: "/img/offer-4.jpg",
+    location: "Hà Nội B",
+    status: { available: 5, total: 7 }, // 5/7
+    owner: "Trần Thị B"
+  },
+  {
+    id: 5,
+    name: "Sân Bóng 5",
+    image: "/img/offer-1.jpg",
+    location: "Hà Nội B",
+    status: { available: 5, total: 7 }, // 5/7
+    owner: "Trần Thị B"
+  },
+  {
+    id: 6,
+    name: "Sân Bóng 6",
+    image: "/img/offer-2.jpg",
     location: "Hà Nội B",
     status: { available: 5, total: 7 }, // 5/7
     owner: "Trần Thị B"
@@ -87,23 +104,9 @@ const SanBongModal = () => {
         </div>
 
         {/* Fields List */}
-        <div className="row">
+        <div className="row g-3">
           {paginatedFields.map((field) => (
-            <div key={field.id} className="col-lg-4 col-md-6 col-12 mb-4">
-              <div className="card">
-                <img src={field.image} alt={field.name} className="card-img-top" />
-                <div className="card-body">
-                  <Link href="/san-bong/[id]" as={`/san-bong/${field.id}`}>
-                    <h5 className="card-title">{field.name}</h5>
-                  </Link>
-                  <p className="card-text mb-2">{field.location}</p>
-                  <p className="mt-2 mb-2">
-                    Tình trạng: {field.status.available}/{field.status.total}
-                  </p>
-                  <p className="mb-0">Chủ sân: {field.owner}</p>
-                </div>
-              </div>
-            </div>
+            <BoxFieldComponent key={field.id} field={field} />
           ))}
         </div>
 

@@ -1,3 +1,5 @@
+import { ADDRESS, EMAIL, MAIN_URL_APP, PHONE_NUMBER, WEB_NAME } from "@quanlysanbong/constants/MainContent";
+
 const FooterComponent = () => {
   return (
     <div>
@@ -9,28 +11,36 @@ const FooterComponent = () => {
           <div className="row g-5">
             <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="footer-item">
-                <a href="index.html" className="p-0">
+                <a href="#" className="p-0" style={{ pointerEvents: "none" }}>
                   <h4 className="text-white">
-                    <i className="fas fa-search-dollar me-3"></i>Stocker
+                    <i className="fas fa-search-dollar me-3"></i>
+                    {WEB_NAME}
                   </h4>
-                  {/* <!-- <img src="img/logo.png" alt="Logo"> --> */}
                 </a>
                 <p className="mb-4">
-                  Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur
-                  adipiscing...
+                  Chúng tôi cung cấp dịch vụ cho thuê sân bóng chất lượng cao, với không gian rộng rãi và cơ sở vật chất
+                  hiện đại. Đặt sân ngay hôm nay để có trải nghiệm tuyệt vời!
                 </p>
                 <div className="d-flex">
-                  <a href="#" className="bg-primary d-flex rounded align-items-center py-2 px-3 me-2">
+                  <a
+                    href="#"
+                    className="bg-primary d-flex rounded align-items-center py-2 px-3 me-2"
+                    style={{ pointerEvents: "none" }}
+                  >
                     <i className="fas fa-apple-alt text-white"></i>
                     <div className="ms-3">
-                      <small className="text-white">Download on the</small>
+                      <small className="text-white">Tải trên</small>
                       <h6 className="text-white">App Store</h6>
                     </div>
                   </a>
-                  <a href="#" className="bg-dark d-flex rounded align-items-center py-2 px-3 ms-2">
+                  <a
+                    href="#"
+                    className="bg-dark d-flex rounded align-items-center py-2 px-3 ms-2"
+                    style={{ pointerEvents: "none" }}
+                  >
                     <i className="fas fa-play text-primary"></i>
                     <div className="ms-3">
-                      <small className="text-white">Get it on</small>
+                      <small className="text-white">Tải trên</small>
                       <h6 className="text-white">Google Play</h6>
                     </div>
                   </a>
@@ -39,108 +49,100 @@ const FooterComponent = () => {
             </div>
             <div className="col-md-6 col-lg-6 col-xl-2">
               <div className="footer-item">
-                <h4 className="text-white mb-4">Quick Links</h4>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> About Us
+                <h4 className="text-white mb-4">Liên kết nhanh</h4>
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Về chúng tôi
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Feature
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Dịch vụ
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Attractions
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Sân bóng
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Tickets
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Giá cả
                 </a>
-                <a href="#">
+                <a href="#" style={{ pointerEvents: "none" }}>
                   <i className="fas fa-angle-right me-2"></i> Blog
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Contact us
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Liên hệ
                 </a>
               </div>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-3">
               <div className="footer-item">
-                <h4 className="text-white mb-4">Support</h4>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Privacy Policy
+                <h4 className="text-white mb-4">Hỗ trợ</h4>
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Chính sách bảo mật
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Terms & Conditions
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Điều khoản & Điều kiện
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Disclaimer
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Miễn trừ trách nhiệm
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Support
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Hỗ trợ khách hàng
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> FAQ
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Câu hỏi thường gặp
                 </a>
-                <a href="#">
-                  <i className="fas fa-angle-right me-2"></i> Help
+                <a href="#" style={{ pointerEvents: "none" }}>
+                  <i className="fas fa-angle-right me-2"></i> Trợ giúp
                 </a>
               </div>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-3">
               <div className="footer-item">
-                <h4 className="text-white mb-4">Contact Info</h4>
+                <h4 className="text-white mb-4">Thông tin liên hệ</h4>
                 <div className="d-flex align-items-center">
                   <i className="fas fa-map-marker-alt text-primary me-3"></i>
-                  <p className="text-white mb-0">123 Street New York.USA</p>
+                  <p className="text-white mb-0">{ADDRESS}</p>
                 </div>
                 <div className="d-flex align-items-center">
                   <i className="fas fa-envelope text-primary me-3"></i>
-                  <p className="text-white mb-0">info@example.com</p>
+                  <p className="text-white mb-0">{EMAIL}</p>
                 </div>
                 <div className="d-flex align-items-center">
                   <i className="fa fa-phone-alt text-primary me-3"></i>
-                  <p className="text-white mb-0">(+012) 3456 7890</p>
+                  <p className="text-white mb-0">{PHONE_NUMBER}</p>
                 </div>
                 <div className="d-flex align-items-center mb-4">
                   <i className="fab fa-firefox-browser text-primary me-3"></i>
-                  <p className="text-white mb-0">Yoursite@ex.com</p>
+                  <p className="text-white mb-0">{MAIN_URL_APP}</p>
                 </div>
                 <div className="d-flex">
-                  <a className="btn btn-primary btn-sm-square rounded-circle me-3" href="#">
+                  <a
+                    className="btn btn-primary btn-sm-square rounded-circle me-3"
+                    href="#"
+                    style={{ pointerEvents: "none" }}
+                  >
                     <i className="fab fa-facebook-f text-white"></i>
                   </a>
-                  <a className="btn btn-primary btn-sm-square rounded-circle me-3" href="#">
+                  <a
+                    className="btn btn-primary btn-sm-square rounded-circle me-3"
+                    href="#"
+                    style={{ pointerEvents: "none" }}
+                  >
                     <i className="fab fa-twitter text-white"></i>
                   </a>
-                  <a className="btn btn-primary btn-sm-square rounded-circle me-3" href="#">
+                  <a
+                    className="btn btn-primary btn-sm-square rounded-circle me-3"
+                    href="#"
+                    style={{ pointerEvents: "none" }}
+                  >
                     <i className="fab fa-instagram text-white"></i>
                   </a>
-                  <a className="btn btn-primary btn-sm-square rounded-circle me-0" href="#">
+                  <a
+                    className="btn btn-primary btn-sm-square rounded-circle me-0"
+                    href="#"
+                    style={{ pointerEvents: "none" }}
+                  >
                     <i className="fab fa-linkedin-in text-white"></i>
                   </a>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="container-fluid copyright py-4">
-        <div className="container">
-          <div className="row g-4 align-items-center">
-            <div className="col-md-6 text-center text-md-start mb-md-0">
-              <span className="text-body">
-                <a href="#" className="border-bottom text-white">
-                  <i className="fas fa-copyright text-light me-2"></i>Your Site Name
-                </a>
-                , All right reserved.
-              </span>
-            </div>
-            <div className="col-md-6 text-center text-md-end text-body">
-              Designed By{" "}
-              <a className="border-bottom text-white" href="https://htmlcodex.com">
-                HTML Codex
-              </a>{" "}
-              Distributed By{" "}
-              <a className="border-bottom text-white" href="https://themewagon.com">
-                ThemeWagon
-              </a>
             </div>
           </div>
         </div>

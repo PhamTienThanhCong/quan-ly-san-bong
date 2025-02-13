@@ -1,4 +1,4 @@
-export const WEB_NAME = "Sân bóng việt";
+export const WEB_NAME = "SPOK ";
 
 export const MAIN_URL_APP = "localhost:3000";
 
