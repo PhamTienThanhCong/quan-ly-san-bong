@@ -10,9 +10,11 @@ export const EMAIL = "thuebongda@gmail.com";
 
 export const ADDRESS = "123 Đường Phố, Thành phố H, Việt Nam";
 
-export const CRYPTO_IV =  ""
-export const CRYPTO_KEY = ""
-export const MONGODB_CONNECT = ""
+export const CRYPTO_IV = "lStIPhA0My";
+export const CRYPTO_KEY = "fqrHTmhkD4xwwWjV";
+export const MONGODB_CONNECT =
+  "mongodb+srv://spok:otYVcXj2TwwRHznX@spok.9vesq.mongodb.net/?retryWrites=true&w=majority&appName=spok";
+// pass: otYVcXj2TwwRHznX user: spok
 
 export const OUR_TEAM = [
   {
