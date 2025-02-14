@@ -10,6 +10,10 @@ export const EMAIL = "thuebongda@gmail.com";
 
 export const ADDRESS = "123 Đường Phố, Thành phố H, Việt Nam";
 
+export const CRYPTO_IV =  ""
+export const CRYPTO_KEY = ""
+export const MONGODB_CONNECT = ""
+
 export const OUR_TEAM = [
   {
     id: 1,

@@ -2,6 +2,7 @@ import Script from "next/script";
 import FooterComponent from "./(marketing)/components/FooterComponent";
 import HeaderComponent from "./(marketing)/components/HeaderComponent";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({ children }) {
   return (
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
         <link href="/lib/css/style.css" rel="stylesheet" />
       </head>
       <body>{children}</body>
+      <Toaster />
     </html>
   );
 }
