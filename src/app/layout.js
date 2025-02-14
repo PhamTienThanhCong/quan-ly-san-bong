@@ -31,8 +31,10 @@ export default function RootLayout({ children }) {
 
         <link href="/lib/css/style.css" rel="stylesheet" />
       </head>
-      <body>{children}</body>
-      <Toaster />
+      <body>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }
