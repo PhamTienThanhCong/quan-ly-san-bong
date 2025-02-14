@@ -1,3 +1,4 @@
+"use client";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -20,7 +21,7 @@ export function AppProvider({ children }) {
 
         // redirect to login page
         setLoading(false);
-        window.location.href = "/login";
+        // window.location.href = "/login";
       } else {
         try {
           const res = await SendRequest("GET", "/api/users/me");

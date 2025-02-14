@@ -1,10 +1,13 @@
 "use client";
+import SendRequest from "@quanlysanbong/utils/SendRequest";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const SignInComponent = () => {
   const [formData, setFormData] = useState({ email: "", password: "", rememberMe: false });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
     let validationErrors = {};
@@ -22,13 +25,20 @@ const SignInComponent = () => {
     return Object.keys(validationErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Simulate user login (In real scenario, call API to authenticate user)
-      console.log("User data:", formData);
-      // Redirect to dashboard or homepage after successful login
+      setLoading(true);
+      const res = await SendRequest("POST", "/api/users/login", formData);
+      setLoading(false);
+      if (res.payload) {
+        toast.success("Đăng nhập thành công");
+        localStorage.setItem("token", res.payload.token);
+        window.location.href = "/";
+      } else {
+        toast.error("Đăng nhập thất bại, vui lòng kiểm tra thông tin của bạn.");
+      }
     }
   };
 
@@ -53,6 +63,7 @@ const SignInComponent = () => {
                       Tài khoản Email
                     </label>
                     <input
+                      disabled={loading}
                       type="email"
                       className="form-control"
                       id="email"
@@ -69,6 +80,7 @@ const SignInComponent = () => {
                       Mật khẩu
                     </label>
                     <input
+                      disabled={loading}
                       type="password"
                       className="form-control"
                       id="password"
@@ -83,6 +95,7 @@ const SignInComponent = () => {
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="form-check">
                       <input
+                        disabled={loading}
                         type="checkbox"
                         className="form-check-input"
                         id="rememberMe"
@@ -98,7 +111,7 @@ const SignInComponent = () => {
                     </a>
                   </div>
 
-                  <button type="submit" className="btn btn-primary w-100 mt-3">
+                  <button type="submit" className="btn btn-primary w-100 mt-3" disabled={loading}>
                     Đăng nhập
                   </button>
 

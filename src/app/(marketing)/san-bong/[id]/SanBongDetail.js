@@ -7,9 +7,47 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
+import toast from "react-hot-toast";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const SanBongDetail = () => {
+  const { currentUser } = useApp();
   const [liked, setLiked] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [price, setPrice] = useState(0);
+
+  const handleOrder = () => {
+    if (Object.keys(currentUser).length > 0) {
+      setShowModal(true);
+    } else {
+      toast.error("Vui lòng đăng nhập để đặt sân");
+    }
+  };
+
+  const handleConfirm = () => {
+    // Xử lý logic đặt sân ở đây
+    toast.success("Đặt sân thành công!");
+    setShowModal(false);
+  };
+
+  const calculatePrice = () => {
+    let basePrice = 0;
+    if (selectedType === "5") basePrice = 200000;
+    else if (selectedType === "7") basePrice = 300000;
+    else if (selectedType === "11") basePrice = 500000;
+
+    // Giả sử giá tăng 20% vào buổi tối (sau 18:00)
+    const hour = parseInt(selectedTime.split(":")[0]);
+    if (hour >= 18) basePrice *= 1.2;
+
+    setPrice(basePrice);
+  };
 
   return (
     <div className="container py-5">
@@ -46,7 +84,9 @@ const SanBongDetail = () => {
             <strong>Giá thuê:</strong> 200.000 - 500.000 VND/h
           </p>
           <div className="w-100 d-flex justify-content-between">
-            <button className="btn btn-primary mt-3">Đặt sân ngay</button>
+            <button className="btn btn-primary mt-3" onClick={handleOrder}>
+              Đặt sân ngay
+            </button>
             <div className="mt-3 d-flex align-items-center">
               <button className="btn btn-link me-2" onClick={() => setLiked(!liked)}>
                 <i className={`fa${liked ? "s" : "r"} fa-heart`} style={{ color: liked ? "red" : "black" }}></i>{" "}
@@ -73,6 +113,46 @@ const SanBongDetail = () => {
       <a href="#" className="btn btn-primary btn-lg-square rounded-circle back-to-top">
         <i className="fa fa-arrow-up"></i>
       </a>
+
+      {/* Modal đặt sân */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Đặt sân</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Loại sân</Form.Label>
+              <Form.Select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                <option value="">Chọn loại sân</option>
+                <option value="5">5 người</option>
+                <option value="7">7 người</option>
+                <option value="11">11 người</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Ngày</Form.Label>
+              <Form.Control type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Giờ</Form.Label>
+              <Form.Control type="time" value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Giá tiền</Form.Label>
+              <Form.Control type="text" value={price.toLocaleString() + " VND"} readOnly />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Đóng
+          </Button>
+          <Button variant="primary" onClick={handleConfirm}>
+            Xác nhận
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

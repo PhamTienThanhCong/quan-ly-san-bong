@@ -5,9 +5,11 @@ import CarouselComponent from "./CarouselComponent";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 
 const HeaderComponent = () => {
   const pathUrl = usePathname();
+  const { currentUser } = useApp();
 
   useEffect(() => {
     setTimeout(() => {
@@ -48,6 +50,12 @@ const HeaderComponent = () => {
     navbarCollapse.classList.remove("show");
   }, [pathUrl]);
 
+  const logout = () => {
+    // Logout
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div className="container-fluid position-relative p-0 header-container">
       <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
@@ -75,9 +83,35 @@ const HeaderComponent = () => {
               Liên hệ
             </Link>
           </div>
-          <Link href="/dang-nhap" className="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">
-            Đăng nhập
-          </Link>
+          {Object.keys(currentUser).length > 0 ? (
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {currentUser.name}
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                  <Link href="#" className="dropdown-item">
+                    Thông tin cá nhân
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" onClick={logout} className="dropdown-item">
+                    Đăng xuất
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link href="/dang-nhap" className="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">
+              Đăng nhập
+            </Link>
+          )}
         </div>
       </nav>
       <CarouselComponent pathUrl={pathUrl} />

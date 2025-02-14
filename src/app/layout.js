@@ -1,8 +1,7 @@
 import Script from "next/script";
-import FooterComponent from "./(marketing)/components/FooterComponent";
-import HeaderComponent from "./(marketing)/components/HeaderComponent";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Toaster } from "react-hot-toast";
+import { AppProvider } from "./contexts/AppContext";
 
 export default function RootLayout({ children }) {
   return (
@@ -32,8 +31,10 @@ export default function RootLayout({ children }) {
         <link href="/lib/css/style.css" rel="stylesheet" />
       </head>
       <body>
-        {children}
-        <Toaster />
+        <AppProvider>
+          {children}
+          <Toaster />
+        </AppProvider>
       </body>
     </html>
   );
