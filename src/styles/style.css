@@ -919,6 +919,23 @@
     object-fit: cover;
 }
 
+
+#loading-full-screen{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-color: #000000a1;
+    z-index: 10000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading-full-screen .spinner-border{
+    width: 3rem;
+    height: 3rem;
+}
+
 /*** Responsive Start ***/
 @media (max-width: 767px) {
     .img-san-bong {
@@ -929,5 +946,9 @@
     }
     .img-the-san-bong{
         height: 180px;
+    }
+    #loading-full-screen .spinner-border{
+        width: 1rem;
+        height: 1rem;
     }
 }

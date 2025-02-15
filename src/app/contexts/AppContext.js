@@ -47,20 +47,7 @@ export function AppProvider({ children }) {
     fetchData();
   }, []);
 
-  return (
-    <AppContext.Provider value={{ currentUser: user }}>
-      {loading ? (
-        // loading using bootstrap spinner
-        <div className="d-flex justify-content-center mt-5">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      ) : (
-        children
-      )}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={{ currentUser: user }}>{children}</AppContext.Provider>;
 }
 
 export function useApp() {

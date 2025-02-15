@@ -1,9 +1,20 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const loadingUi = (isShow) => {
+  const loadingUiDiv = document.getElementById("loading-full-screen");
+  if (!loadingUiDiv) return;
+  if (isShow) {
+    loadingUiDiv.style.display = "flex";
+  } else {
+    loadingUiDiv.style.display = "none";
+  }
+};
+
 const SendRequest = async (method, url, data = {}) => {
   try {
     const token = localStorage.getItem("token") || "";
+    loadingUi(true);
     const response = await axios({
       method,
       url: url,
@@ -21,6 +32,8 @@ const SendRequest = async (method, url, data = {}) => {
     const message = error?.response?.data?.message || error.message || "Something went wrong";
     toast.error(message);
     return message;
+  } finally {
+    loadingUi(false);
   }
 };
 

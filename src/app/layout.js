@@ -34,6 +34,12 @@ export default function RootLayout({ children }) {
         <AppProvider>
           {children}
           <Toaster />
+          {/* loading full screen */}
+          <div className="loading position-fixed" id="loading-full-screen">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </AppProvider>
       </body>
     </html>
