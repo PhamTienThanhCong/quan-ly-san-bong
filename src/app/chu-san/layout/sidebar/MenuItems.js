@@ -18,19 +18,19 @@ const Menuitems = [
     id: uniqueId(),
     title: "Bảng tổng quan",
     icon: IconLayoutDashboard,
-    href: "/"
+    href: "/chu-san"
   },
   {
     id: uniqueId(),
     title: "Chi tiết doanh thu",
     icon: IconChartBar,
-    href: "/doanh-thu"
+    href: "/chu-san/doanh-thu"
   },
   {
     id: uniqueId(),
     title: "Lịch sử nạp rút",
     icon: IconHistory,
-    href: "/nap-rut"
+    href: "/chu-san/nap-rut"
   },
   {
     navlabel: true,
@@ -40,13 +40,13 @@ const Menuitems = [
     id: uniqueId(),
     title: "Danh sách đặt sân",
     icon: IconListCheck,
-    href: "/danh-sach-dat-san"
+    href: "/chu-san/danh-sach-dat-san"
   },
   {
     id: uniqueId(),
     title: "Đặt sân",
     icon: IconCalendarEvent,
-    href: "/dat-san"
+    href: "/chu-san/dat-san"
   },
   {
     navlabel: true,
@@ -56,13 +56,13 @@ const Menuitems = [
     id: uniqueId(),
     title: "Danh sách sân",
     icon: IconSoccerField,
-    href: "/danh-sach-san"
+    href: "/chu-san/danh-sach-san"
   },
   {
     id: uniqueId(),
     title: "Thêm sân",
     icon: IconPlus,
-    href: "/them-san"
+    href: "/chu-san/them-san"
   }
 ];
 

@@ -14,6 +14,11 @@ export const CRYPTO_IV = "lStIPhA0My";
 export const CRYPTO_KEY = "fqrHTmhkD4xwwWjV";
 export const MONGODB_CONNECT =
   "mongodb+srv://spok:otYVcXj2TwwRHznX@spok.9vesq.mongodb.net/?retryWrites=true&w=majority&appName=spok";
+
+export const CLOUDINARY_API_SECRET = "9s6ZvaNPMttubdvUUrb9WHPyOyU";
+export const CLOUDINARY_API_KEY = "337372918935683";
+export const CLOUDINARY_CLOUD_NAME = "dxjutbrpy";
+
 // pass: otYVcXj2TwwRHznX user: spok
 
 export const OUR_TEAM = [
