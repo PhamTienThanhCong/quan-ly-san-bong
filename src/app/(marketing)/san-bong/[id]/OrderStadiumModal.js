@@ -106,7 +106,7 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
         if (res.payload && res.payload === "done") {
           return true;
         }
-        return true;
+        return false;
       };
       if (res.payload) {
         await handleGetQr(res.payload);
@@ -122,7 +122,7 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
               clearInterval(timeId);
 
               // Update the order status
-              await SendRequest("post", "/api/orders", {
+              await SendRequest("put", "/api/orders", {
                 id: res.payload._id,
                 status: "confirmed"
               });
