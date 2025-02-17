@@ -14,7 +14,9 @@ export const loadingUi = (isShow) => {
 const SendRequest = async (method, url, data = {}) => {
   try {
     const token = localStorage.getItem("token") || "";
-    loadingUi(true);
+    if (url !== "/api/webhooks") {
+      loadingUi(true);
+    }
     const response = await axios({
       method,
       url: url,
@@ -30,7 +32,9 @@ const SendRequest = async (method, url, data = {}) => {
   } catch (error) {
     console.error(error);
     const message = error?.response?.data?.message || error.message || "Something went wrong";
-    toast.error(message);
+    if (url !== "/api/webhooks") {
+      toast.error(message);
+    }
     return message;
   } finally {
     loadingUi(false);

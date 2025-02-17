@@ -7,13 +7,30 @@ const DB_NAME = "stadiums";
 const COLLECTION_NAME = "orders";
 
 // API GET - Lấy danh sách sân bóng
-export async function GET() {
+export async function GET(req) {
   try {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
     const ordersCollection = db.collection(COLLECTION_NAME);
 
-    const orders = await ordersCollection.find({}).sort({ created_at: -1 }).toArray();
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.search);
+
+    const userId = searchParams.get("userId");
+    const stadiumId = searchParams.get("stadiumId");
+    const ownerId = searchParams.get("ownerId");
+
+    // Build the search query dynamically based on the provided parameters
+    const searchQuery = {};
+    if (userId) searchQuery.userId = getObjectId(userId);
+    if (stadiumId) searchQuery.stadiumId = getObjectId(stadiumId);
+    if (ownerId) searchQuery.ownerId = getObjectId(ownerId);
+
+    // Fetch the orders based on the search query, if any filters were provided
+    const orders = await ordersCollection
+      .find(searchQuery)
+      .sort({ created_at: 1 }) // Sort by created_at in ascending order
+      .toArray();
 
     return NextResponse.json({ success: true, data: orders });
   } catch (error) {
@@ -35,7 +52,9 @@ export async function POST(req) {
 
     deposit = parseInt(deposit);
 
-    deposit = deposit * 30 / 100;
+    const total = deposit;
+
+    deposit = (deposit * 30) / 100;
 
     // làm tròn số tiền cọc
     deposit = Math.ceil(deposit / 1000) * 1000;
@@ -47,6 +66,7 @@ export async function POST(req) {
       field,
       time,
       deposit,
+      remaining: total - deposit,
       status: "pending",
       date,
       created_at: new Date()
@@ -69,10 +89,7 @@ export async function PUT(req) {
     const db = client.db(DB_NAME);
     const ordersCollection = db.collection(COLLECTION_NAME);
 
-    const {
-      id,
-      status,
-    } = await req.json();
+    const { id, status } = await req.json();
 
     const ObjectId = getObjectId(id);
     await validateToken(req);

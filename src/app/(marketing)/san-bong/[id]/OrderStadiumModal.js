@@ -11,24 +11,13 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
     [selectedField, setSelectedField] = useState(""),
     [selectedTime, setSelectedTime] = useState(""),
     [errorMessage, setErrorMessage] = useState(""),
-    [orderSuccess, setOrderSuccess] = useState({
-      "userId": "67aec96fab0a3501aa8bc807",
-      "stadiumId": "67b2b5c976a1f8ded1e6c56f",
-      "ownerId": "67b2389076a1f8ded1e6c56b",
-      "field": "7",
-      "time": "7:40 - 9:10",
-      "deposit": 180000,
-      "remaining": 300000,
-      "status": "pending",
-      "date": "2025-02-17",
-      "created_at": "2025-02-17T06:47:22.554Z",
-      "_id": "67b2db7a76a1f8ded1e6c570"
-  });
+    [orderSuccess, setOrderSuccess] = useState(null),
+    [orderDone, setOrderDone] = useState(false);
 
-  const [qrCode, setQrCode] = useState('');
+  const [qrCode, setQrCode] = useState("");
 
   useEffect(() => {
-    if (open){
+    if (open) {
       // reset all
       setErrorMessage("");
       // setOrderSuccess(null);
@@ -38,10 +27,10 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
       setSelectedField("");
       setSelectedTime("");
     }
-  },[])
+  }, [open]);
 
   const handleGetQr = async (orderSuccess) => {
-    const content = `deposit ${orderSuccess._id} ${orderSuccess.stadiumId}`;
+    const content = `cat coc ${orderSuccess._id}`;
 
     const payload = {
       accountNo: "0396396332",
@@ -50,24 +39,20 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
       amount: orderSuccess.deposit,
       addInfo: content,
       format: "text",
-      template: "compact2",
+      template: "compact2"
     };
 
     const res = await fetch("https://api.vietqr.io/v2/generate", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     });
 
     const data = await res.json();
     setQrCode(data.data.qrDataURL);
   };
-
-  useEffect(() => {
-    handleGetQr(orderSuccess);
-  }, [orderSuccess]);  
 
   const today = new Date();
   const dateOptions = [];
@@ -113,6 +98,43 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
 
       setOrderSuccess(res.payload);
 
+      const checkOrder = async (orderSuccess) => {
+        const res = await SendRequest("PUT", `/api/webhooks`, {
+          content: `cat coc ${orderSuccess._id}`,
+          transferAmount: orderSuccess.deposit
+        });
+        if (res.payload && res.payload === "done") {
+          return true;
+        }
+        return true;
+      };
+      if (res.payload) {
+        await handleGetQr(res.payload);
+
+        // Set timeout to wait for 5 seconds
+        setTimeout(() => {
+          let timeId = setInterval(async () => {
+            // Perform async check
+            const _check = await checkOrder(res.payload);
+
+            if (_check) {
+              // If the order is confirmed, clear the interval
+              clearInterval(timeId);
+
+              // Update the order status
+              await SendRequest("post", "/api/orders", {
+                id: res.payload._id,
+                status: "confirmed"
+              });
+
+              // Update the state with the confirmed order status
+              setOrderSuccess({ ...res.payload, status: "confirmed" });
+              setOrderDone(true);
+            }
+          }, 3000); // Check every 3 seconds
+        }, 5000); // Wait 5 seconds before starting the interval
+      }
+
       // reset form
       setSelectedDate(dateOptions[0]);
       setSelectedField("");
@@ -128,26 +150,52 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
       <Modal.Body>
         {orderSuccess ? (
           <div>
-            <p><strong>Thông tin đặt sân:</strong></p>
+            <p>
+              <strong>Thông tin đặt sân:</strong>
+            </p>
             <ul>
-              <li><strong>Ngày đặt:</strong> {convertDateFormat(orderSuccess.date)}</li>
-              <li><strong>Loại sân:</strong> {stadiumData.fields[orderSuccess.field].name}</li>
-              <li><strong>Khung giờ:</strong> {orderSuccess.time}</li>
-              <li><strong>Tiền cọc:</strong> {formatCurrency(orderSuccess.deposit)}</li>
-              <li><strong>Còn lại:</strong> {formatCurrency(orderSuccess.remaining)}</li>
+              <li>
+                <strong>Ngày đặt:</strong> {convertDateFormat(orderSuccess.date)}
+              </li>
+              <li>
+                <strong>Loại sân:</strong> {stadiumData.fields[orderSuccess.field].name}
+              </li>
+              <li>
+                <strong>Khung giờ:</strong> {orderSuccess.time}
+              </li>
+              <li>
+                <strong>Tiền cọc:</strong> {formatCurrency(orderSuccess.deposit)}
+              </li>
+              <li>
+                <strong>Còn lại:</strong> {formatCurrency(orderSuccess.remaining)}
+              </li>
               <li>
                 <strong>Trạng thái:</strong> {orderSuccess.status === "pending" ? "Chờ xác nhận" : "Đã xác nhận"}
               </li>
             </ul>
-            <p><strong>Chủ sân:</strong> {stadiumData.owner.name} ({stadiumData.owner.phone})</p>
-            <p><strong>Chuyển khoản qua ngân hàng:</strong></p>
-            <div className="d-flex justify-content-center mt-2">
-            {qrCode.length > 0 ? (
-              <img src={qrCode} alt="Chuyển khoản" className="img-fluid" />
-            ):(
-              <p>Đang tải mã QR...</p>
+            <p>
+              <strong>Chủ sân:</strong> {stadiumData.owner.name} ({stadiumData.owner.phone})
+            </p>
+            {orderDone ? (
+              <h3 className="text-success text-center">
+                <i className="fa fa-check-circle" />
+                <br />
+                Đã nhận tiền cọc thành công
+              </h3>
+            ) : (
+              <>
+                <p>
+                  <strong>Chuyển khoản qua ngân hàng:</strong>
+                </p>
+                <div className="d-flex justify-content-center mt-2">
+                  {qrCode.length > 0 ? (
+                    <img src={qrCode} alt="Chuyển khoản" className="img-fluid" />
+                  ) : (
+                    <p>Đang tải mã QR...</p>
+                  )}
+                </div>
+              </>
             )}
-            </div>
           </div>
         ) : (
           <Form>
@@ -194,12 +242,20 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
-          Hủy
-        </Button>
-        <Button variant="primary" onClick={handleOrder}>
-          {orderSuccess ? "Xác nhận" : "Xác nhận đặt sân"}
-        </Button>
+        {orderDone ? (
+          <Button variant="secondary" onClick={onClose}>
+            Đóng
+          </Button>
+        ) : (
+          <>
+            <Button variant="secondary" onClick={onClose}>
+              Hủy
+            </Button>
+            <Button variant="primary" onClick={handleOrder}>
+              {orderSuccess ? "Xác nhận" : "Xác nhận đặt sân"}
+            </Button>
+          </>
+        )}
       </Modal.Footer>
     </Modal>
   );
