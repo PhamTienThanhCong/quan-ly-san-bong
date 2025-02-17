@@ -66,9 +66,9 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
     );
   }
 
-  useEffect(() => {
-    setSelectedDate(dateOptions[0]);
-  }, [dateOptions]);
+  // useEffect(() => {
+  //   setSelectedDate(dateOptions[0]);
+  // }, [dateOptions]);
 
   const convertDateFormat = (dateString) => {
     const [year, month, day] = dateString.split("-");
@@ -202,6 +202,7 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
             <Form.Group className="mb-3">
               <Form.Label>Chọn ngày đặt sân</Form.Label>
               <Form.Select value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)}>
+                <option value="">Chọn ngày đặt sân</option>
                 {dateOptions.map((date, index) => (
                   <option key={index} value={date}>{`${convertDateFormat(date)}`}</option>
                 ))}
@@ -251,7 +252,7 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
             <Button variant="secondary" onClick={onClose}>
               Hủy
             </Button>
-            <Button variant="primary" onClick={handleOrder}>
+            <Button variant="primary" onClick={handleOrder} disabled={orderSuccess ? true : false}>
               {orderSuccess ? "Xác nhận" : "Xác nhận đặt sân"}
             </Button>
           </>

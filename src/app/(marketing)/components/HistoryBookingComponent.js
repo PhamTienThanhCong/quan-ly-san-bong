@@ -1,6 +1,6 @@
 "use client";
 
-import { convertDateTime, formatCurrency } from "@quanlysanbong/utils/Main";
+import { convertDate, convertDateTime, formatCurrency } from "@quanlysanbong/utils/Main";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -75,7 +75,7 @@ const HistoryBookingComponent = ({ currentUser }) => {
                   {booking.stadium?.locationDetail}, {booking.stadium?.location}
                 </div>
               </td>
-              <td>{new Date(booking.date).toLocaleDateString()}</td>
+              <td>{convertDate(booking.date)}</td>
               <td>Sân {booking.field}</td>
               <td>{booking.time}</td>
               <td>{formatCurrency(booking.deposit)}</td>

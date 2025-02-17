@@ -5,16 +5,23 @@ import { encrypt } from "@quanlysanbong/utils/Security";
 import { NextResponse } from "next/server";
 
 // API GET để lấy danh sách users
-export async function GET() {
+export async function GET(req) {
   try {
     const client = await clientPromise;
     const db = client.db("accounts");
     const accountsCollection = db.collection("users");
 
-    // Lấy dữ liệu từ bảng users
-    // const users = await accountsCollection.find({}).toArray();
-    // Lấy dữ liệu tạo mới nhất lên trước
-    const users = await accountsCollection.find({}).sort({ created_at: -1 }).toArray();
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.search);
+
+    const role = searchParams.get("role");
+
+    const users = await accountsCollection
+      .find({
+        role: role ? role : { $exists: true }
+      })
+      .sort({ created_at: -1 })
+      .toArray();
 
     return NextResponse.json({ success: true, data: users });
   } catch (error) {
@@ -54,6 +61,8 @@ export async function POST(req) {
       name,
       address,
       role,
+      totalPrice: 0,
+      withdrawn: 0,
       active: true,
       created_at: new Date()
     };

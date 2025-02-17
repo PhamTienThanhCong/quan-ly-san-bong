@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Grid,
   Box,
@@ -22,17 +22,22 @@ import {
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import PageContainer from "../../components/container/PageContainer";
 import Link from "next/link";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
+import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
 
 const StadiumListPage = () => {
+  const { currentUser } = useApp();
   const [stadiums, setStadiums] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await SendRequest("GET", "/api/stadiums");
+      const res = await SendRequest("GET", "/api/stadiums", {
+        ownerId: currentUser.role === ROLE_MANAGER.SALE ? currentUser._id : ""
+      });
       if (res.payload) {
         setStadiums(res.payload);
       }
@@ -41,11 +46,12 @@ const StadiumListPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser]);
 
   useEffect(() => {
+    if (Object.keys(currentUser).length === 0) return;
     fetchData();
-  }, []);
+  }, [currentUser, fetchData]);
 
   const handleReload = () => {
     fetchData();

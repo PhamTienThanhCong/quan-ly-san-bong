@@ -11,29 +11,7 @@ import MonthlyEarnings from "@quanlysanbong/app/chu-san/components/dashboard/Mon
 const Dashboard = () => {
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">
-      <Box>
-        <Grid container spacing={3}>
-          <Grid item xs={12} lg={8}>
-            <SalesOverview />
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <YearlyBreakup />
-              </Grid>
-              <Grid item xs={12}>
-                <MonthlyEarnings />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} lg={5}>
-            <RecentNotifies />
-          </Grid>
-          <Grid item xs={12} lg={7}>
-            <ProductPerformance />
-          </Grid>
-        </Grid>
-      </Box>
+      <Box></Box>
     </PageContainer>
   );
 };

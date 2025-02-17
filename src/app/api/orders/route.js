@@ -15,6 +15,9 @@ export async function GET(req) {
     const ordersCollection = db.collection(COLLECTION_NAME);
     const stadiumCollection = db.collection(STADIUM_COLLECTION_NAME);
 
+    const dbUser = client.db("accounts");
+    const accountsCollection = dbUser.collection("users");
+
     const url = new URL(req.url);
     const searchParams = new URLSearchParams(url.search);
 
@@ -38,6 +41,7 @@ export async function GET(req) {
 
     // get all stadiumId from orders
     const stadiumIds = orders.map((order) => order.stadiumId);
+    const userIds = orders.map((order) => order.userId);
 
     // Fetch all the stadiums
     const stadiums = await stadiumCollection
@@ -47,10 +51,21 @@ export async function GET(req) {
       )
       .toArray();
 
+    // Fetch all the users
+    const users = await accountsCollection
+      .find({ _id: { $in: userIds } }, { projection: { name: 1, email: 1, phone: 1 } })
+      .toArray();
+
     // Map the orders to include the stadium details
     orders = orders.map((order) => {
       const stadium = stadiums.find((stadium) => stadium._id.equals(order.stadiumId));
       return { ...order, stadium };
+    });
+
+    // Map the orders to include the user details
+    orders = orders.map((order) => {
+      const user = users.find((user) => user._id.equals(order.userId));
+      return { ...order, user };
     });
 
     return NextResponse.json({ success: true, data: orders });
@@ -109,6 +124,8 @@ export async function PUT(req) {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
     const ordersCollection = db.collection(COLLECTION_NAME);
+    const dbUser = client.db("accounts");
+    const accountsCollection = dbUser.collection("users");
 
     const { id, status } = await req.json();
 
@@ -119,6 +136,21 @@ export async function PUT(req) {
     if (!stadium) {
       return NextResponse.json({ success: false, message: "Sân vận động không tồn tại" }, { status: 404 });
     }
+
+    const ownerId = stadium.ownerId;
+
+    const ownerData = await accountsCollection.findOne({
+      _id: ownerId
+    });
+
+    await accountsCollection.updateOne(
+      { _id: ownerId },
+      {
+        $set: {
+          totalPrice: (ownerData.totalPrice || 0) + stadium.deposit
+        }
+      }
+    );
 
     await ordersCollection.updateOne(
       { _id: ObjectId },

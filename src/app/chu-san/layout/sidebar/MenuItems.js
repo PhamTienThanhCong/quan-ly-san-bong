@@ -5,7 +5,9 @@ import {
   IconListCheck,
   IconCalendarEvent,
   IconSoccerField,
-  IconPlus
+  IconPlus,
+  IconUser,
+  IconUsers
 } from "@tabler/icons-react";
 import { uniqueId } from "lodash";
 
@@ -38,16 +40,30 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
-    title: "Danh sách đặt sân",
+    title: "Lịch sử đặt sân",
     icon: IconListCheck,
     href: "/chu-san/danh-sach-dat-san"
   },
   {
-    id: uniqueId(),
-    title: "Đặt sân",
-    icon: IconCalendarEvent,
-    href: "/chu-san/dat-san"
+    navlabel: true,
+    subheader: "Quản lý người dùng",
+    onlyAdmin: true
   },
+  {
+    id: uniqueId(),
+    title: "Danh sách người dùng",
+    icon: IconUsers,
+    href: "/chu-san/danh-sach-nguoi-dung",
+    onlyAdmin: true
+  },
+  {
+    id: uniqueId(),
+    title: "Danh sách chủ sân",
+    icon: IconUsers,
+    href: "/chu-san/danh-sach-chu-san",
+    onlyAdmin: true
+  },
+
   {
     navlabel: true,
     subheader: "Quản lý sân"
@@ -62,7 +78,8 @@ const Menuitems = [
     id: uniqueId(),
     title: "Thêm sân",
     icon: IconPlus,
-    href: "/chu-san/them-san"
+    href: "/chu-san/them-san",
+    onlyUser: true
   }
 ];
 

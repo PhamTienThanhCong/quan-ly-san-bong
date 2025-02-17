@@ -7,13 +7,23 @@ const DB_NAME = "stadiums";
 const COLLECTION_NAME = "stadium";
 
 // API GET - Lấy danh sách sân bóng
-export async function GET() {
+export async function GET(req) {
   try {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
     const stadiumsCollection = db.collection(COLLECTION_NAME);
 
-    const stadiums = await stadiumsCollection.find({}).sort({ created_at: -1 }).toArray();
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.search);
+
+    const ownerId = searchParams.get("ownerId");
+
+    const stadiums = await stadiumsCollection
+      .find({
+        ownerId: ownerId ? getObjectId(ownerId) : { $exists: true }
+      })
+      .sort({ created_at: -1 })
+      .toArray();
 
     return NextResponse.json({ success: true, data: stadiums });
   } catch (error) {

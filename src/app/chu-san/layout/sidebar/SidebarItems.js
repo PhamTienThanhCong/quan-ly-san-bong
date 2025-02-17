@@ -4,8 +4,11 @@ import { usePathname } from "next/navigation";
 import { Box, List } from "@mui/material";
 import NavItem from "./NavItem";
 import NavGroup from "./NavGroup/NavGroup";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
+import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
 
 const SidebarItems = ({ toggleMobileSidebar }) => {
+  const { currentUser } = useApp();
   const pathname = usePathname();
   const pathDirect = pathname;
 
@@ -14,6 +17,12 @@ const SidebarItems = ({ toggleMobileSidebar }) => {
       <List sx={{ pt: 0 }} className="sidebarNav" component="div">
         {Menuitems.map((item) => {
           // {/********SubHeader**********/}
+          if (item.onlyUser && currentUser.role === ROLE_MANAGER.ADMIN) {
+            return null;
+          }
+          if (item.onlyAdmin && currentUser.role === ROLE_MANAGER.SALE) {
+            return null;
+          }
           if (item.subheader) {
             return <NavGroup item={item} key={item.subheader} />;
 

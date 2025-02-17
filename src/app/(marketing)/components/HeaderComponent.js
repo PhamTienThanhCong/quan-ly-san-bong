@@ -118,9 +118,9 @@ const HeaderComponent = () => {
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {currentUser.role !== ROLE_MANAGER.USER && (
                   <li>
-                    <Link href="/chu-san" className="dropdown-item">
+                    <a href="/chu-san" className="dropdown-item">
                       Trang quản trị
-                    </Link>
+                    </a>
                   </li>
                 )}
                 <li>
