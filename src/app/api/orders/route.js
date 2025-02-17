@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { validateToken } from "@quanlysanbong/lib/auth";
 
 const DB_NAME = "stadiums";
+const STADIUM_COLLECTION_NAME = "stadium";
 const COLLECTION_NAME = "orders";
 
 // API GET - Lấy danh sách sân bóng
@@ -12,6 +13,7 @@ export async function GET(req) {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
     const ordersCollection = db.collection(COLLECTION_NAME);
+    const stadiumCollection = db.collection(STADIUM_COLLECTION_NAME);
 
     const url = new URL(req.url);
     const searchParams = new URLSearchParams(url.search);
@@ -21,16 +23,35 @@ export async function GET(req) {
     const ownerId = searchParams.get("ownerId");
 
     // Build the search query dynamically based on the provided parameters
-    const searchQuery = {};
+    const searchQuery = {
+      status: "confirmed"
+    };
     if (userId) searchQuery.userId = getObjectId(userId);
     if (stadiumId) searchQuery.stadiumId = getObjectId(stadiumId);
     if (ownerId) searchQuery.ownerId = getObjectId(ownerId);
 
     // Fetch the orders based on the search query, if any filters were provided
-    const orders = await ordersCollection
+    let orders = await ordersCollection
       .find(searchQuery)
-      .sort({ created_at: 1 }) // Sort by created_at in ascending order
+      .sort({ created_at: -1 }) // Sort by created_at in ascending order
       .toArray();
+
+    // get all stadiumId from orders
+    const stadiumIds = orders.map((order) => order.stadiumId);
+
+    // Fetch all the stadiums
+    const stadiums = await stadiumCollection
+      .find(
+        { _id: { $in: stadiumIds } },
+        { projection: { stadiumName: 1, location: 1, locationDetail: 1, openingTime: 1, closingTime: 1 } }
+      )
+      .toArray();
+
+    // Map the orders to include the stadium details
+    orders = orders.map((order) => {
+      const stadium = stadiums.find((stadium) => stadium._id.equals(order.stadiumId));
+      return { ...order, stadium };
+    });
 
     return NextResponse.json({ success: true, data: orders });
   } catch (error) {

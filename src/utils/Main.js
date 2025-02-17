@@ -45,6 +45,16 @@ export function calculateMaintenanceDateRaw(createdAt, daysToMaintain) {
   return maintenanceDate;
 }
 
+export const convertDateTime = (date) => {
+  return new Date(date).toLocaleString("vi-VN", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+};
+
 export const convertDate = (date) => {
   return new Date(date).toLocaleDateString("vi-VN", {
     month: "2-digit",
@@ -55,7 +65,12 @@ export const convertDate = (date) => {
 
 export const formatCurrency = (input, currency = "VND") => {
   // Chuyển đổi chuỗi sang số nếu input là chuỗi
-  let amount = parseFloat(input.toString().replace(/[^0-9.-]+/g, ""));
+  let amount = input;
+  try {
+    amount = parseFloat(input.toString().replace(/[^0-9.-]+/g, ""));
+  } catch (e) {
+    amount = 0;
+  }
 
   // Kiểm tra nếu không phải số hợp lệ thì trả về 0 VND
   if (isNaN(amount) || amount <= 0) return "0 " + currency;

@@ -7,6 +7,7 @@ import UpdateProfileComponent from "./UpdateProfileComponent";
 import toast from "react-hot-toast";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
+import HistoryBookingComponent from "./HistoryBookingComponent";
 
 const UserProfileComponent = () => {
   const { currentUser, updateUser } = useApp();
@@ -54,7 +55,7 @@ const UserProfileComponent = () => {
         </Tab>
         {currentUser.role === ROLE_MANAGER.USER && (
           <Tab eventKey="empty" title="Lịch sử đặt sân">
-            <p>Trang trống để tuỳ chỉnh sau này.</p>
+            <HistoryBookingComponent currentUser={currentUser} />
           </Tab>
         )}
         <Tab eventKey="password" title="Cập nhật mật khẩu">
