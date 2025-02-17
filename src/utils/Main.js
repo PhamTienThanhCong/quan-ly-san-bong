@@ -1,11 +1,3 @@
-export function formatCurrency(value) {
-  // convert number if it's not a number
-  if (typeof value !== "number") {
-    value = Number(value);
-  }
-  return value.toLocaleString("vi-VN", { style: "currency", currency: "VND" }).replace("₫", "");
-}
-
 /**
  * Hàm tính ngày bảo trì dự kiến
  * @param {string} createdAt - Ngày tạo (dưới dạng chuỗi, ví dụ: "2024-11-08T05:01:24.376Z")
@@ -25,15 +17,15 @@ export function calculateMaintenanceDate(createdAt, daysToMaintain) {
 
   const creationDate = new Date(createdAt);
   const maintenanceDate = new Date(creationDate);
-  
+
   // Cộng thêm số ngày bảo trì vào ngày tạo
   maintenanceDate.setDate(maintenanceDate.getDate() + daysToMaintain);
 
   // Định dạng lại ngày bảo trì theo "dd/MM/yyyy"
   const formattedDate = maintenanceDate.toLocaleDateString("vi-VN", {
-    month: '2-digit',
-    day: '2-digit',
-    year: 'numeric'
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric"
   });
 
   return formattedDate;
@@ -47,7 +39,7 @@ export function calculateMaintenanceDateRaw(createdAt, daysToMaintain) {
 
   const creationDate = new Date(createdAt);
   const maintenanceDate = new Date(creationDate);
-  
+
   // Cộng thêm số ngày bảo trì vào ngày tạo
   maintenanceDate.setDate(maintenanceDate.getDate() + daysToMaintain);
   return maintenanceDate;
@@ -55,8 +47,22 @@ export function calculateMaintenanceDateRaw(createdAt, daysToMaintain) {
 
 export const convertDate = (date) => {
   return new Date(date).toLocaleDateString("vi-VN", {
-    month: '2-digit',
-    day: '2-digit',
-    year: 'numeric'
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric"
   });
-}
+};
+
+export const formatCurrency = (input, currency = "VND") => {
+  // Chuyển đổi chuỗi sang số nếu input là chuỗi
+  let amount = parseFloat(input.toString().replace(/[^0-9.-]+/g, ""));
+
+  // Kiểm tra nếu không phải số hợp lệ thì trả về 0 VND
+  if (isNaN(amount) || amount <= 0) return "0 " + currency;
+
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: currency,
+    minimumFractionDigits: 0
+  }).format(amount);
+};

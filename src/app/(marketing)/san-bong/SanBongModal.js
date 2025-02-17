@@ -1,62 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchAddressComponent from "../components/SearchAddressComponent";
-import Link from "next/link";
 import BoxFieldComponent from "../components/BoxFieldComponent";
-
-// Dummy data for fields
-const fields = [
-  {
-    id: 1,
-    name: "Sân Bóng 1",
-    image: "/img/offer-1.jpg",
-    location: "Hà Nội A",
-    status: { available: 7, total: 7 }, // 7/7
-    owner: "Nguyễn Văn A"
-  },
-  {
-    id: 2,
-    name: "Sân Bóng 2",
-    image: "/img/offer-2.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 3,
-    name: "Sân Bóng 3",
-    image: "/img/offer-3.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 4,
-    name: "Sân Bóng 4",
-    image: "/img/offer-4.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 5,
-    name: "Sân Bóng 5",
-    image: "/img/offer-1.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 6,
-    name: "Sân Bóng 6",
-    image: "/img/offer-2.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  }
-  // Add more fields here
-];
+import SendRequest from "@quanlysanbong/utils/SendRequest";
 
 const itemsPerPage = 12;
 
@@ -64,6 +11,18 @@ const SanBongModal = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [areaFilter, setAreaFilter] = useState("");
   const [sizeFilter, setSizeFilter] = useState("");
+  const [fields, setFields] = useState([]);
+
+  // Fetch fields data from API
+  useEffect(() => {
+    const fetchFields = async () => {
+      const response = await SendRequest("GET", "/api/stadiums");
+      if (response.payload) {
+        setFields(response.payload);
+      }
+    };
+    fetchFields();
+  }, []);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -106,7 +65,7 @@ const SanBongModal = () => {
         {/* Fields List */}
         <div className="row g-3">
           {paginatedFields.map((field) => (
-            <BoxFieldComponent key={field.id} field={field} />
+            <BoxFieldComponent key={field._id} field={field} />
           ))}
         </div>
 
