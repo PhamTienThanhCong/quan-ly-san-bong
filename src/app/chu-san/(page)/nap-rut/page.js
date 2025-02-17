@@ -106,13 +106,15 @@ const WithdrawalHistoryPage = () => {
           </Button>
         )}
       </Box>
-      <Box display="flex" justifyContent="space-between" mb={3}>
-        <Typography variant="h6">Tổng số tiền: {formatCurrency(currentUser.totalPrice || 0)}</Typography>
-        <Typography variant="h6">
-          Số dư hiện tại: {formatCurrency(currentUser.totalPrice - (currentUser.withdrawn || 0))}
-        </Typography>
-        <Typography variant="h6">Số tiền đã rút: {formatCurrency(currentUser.withdrawn || 0)}</Typography>
-      </Box>
+      {currentUser.role === ROLE_MANAGER.SALE && (
+        <Box display="flex" justifyContent="space-between" mb={3}>
+          <Typography variant="h6">Tổng số tiền: {formatCurrency(currentUser.totalPrice || 0)}</Typography>
+          <Typography variant="h6">
+            Số dư hiện tại: {formatCurrency(currentUser.totalPrice - (currentUser.withdrawn || 0))}
+          </Typography>
+          <Typography variant="h6">Số tiền đã rút: {formatCurrency(currentUser.withdrawn || 0)}</Typography>
+        </Box>
+      )}
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
           <CircularProgress />
