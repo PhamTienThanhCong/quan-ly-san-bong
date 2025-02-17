@@ -24,64 +24,12 @@ export const metadata = {
     url: META_DATA.URL
   }
 };
-
-const fields = [
-  {
-    id: 1,
-    name: "Sân Bóng 1",
-    image: "/img/offer-1.jpg",
-    location: "Hà Nội A",
-    status: { available: 7, total: 7 }, // 7/7
-    owner: "Nguyễn Văn A"
-  },
-  {
-    id: 2,
-    name: "Sân Bóng 2",
-    image: "/img/offer-2.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 3,
-    name: "Sân Bóng 3",
-    image: "/img/offer-3.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 4,
-    name: "Sân Bóng 4",
-    image: "/img/offer-4.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 5,
-    name: "Sân Bóng 5",
-    image: "/img/offer-1.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  },
-  {
-    id: 6,
-    name: "Sân Bóng 6",
-    image: "/img/offer-2.jpg",
-    location: "Hà Nội B",
-    status: { available: 5, total: 7 }, // 5/7
-    owner: "Trần Thị B"
-  }
-  // Add more fields here
-];
 export default function Home() {
   return (
     <div>
       <AboutUsComponent />
 
-      <div className="container-fluid service pb-5">
+      {/* <div className="container-fluid service pb-5">
         <div className="container">
           <div className="text-center mx-auto pb-3 wow fadeInUp" data-wow-delay="0.2s" style={{ maxWidth: "800px" }}>
             <h4 className="text-primary">Sân bóng phổ biến</h4>
@@ -93,7 +41,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <OurFeaturesComponent />
 

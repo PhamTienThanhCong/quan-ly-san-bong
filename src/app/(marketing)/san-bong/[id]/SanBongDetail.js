@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -9,12 +8,12 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 import toast from "react-hot-toast";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import { usePathname } from "next/navigation";
 import { formatCurrency } from "@quanlysanbong/utils/Main";
+import OrderStadiumModal from "./OrderStadiumModal";
+import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
+import Link from "next/link";
 
 const SanBongDetail = () => {
   const { currentUser } = useApp();
@@ -44,23 +43,10 @@ const SanBongDetail = () => {
     }
   };
 
-  const handleConfirm = () => {
-    toast.success("Đặt sân thành công!");
-    setShowModal(false);
-  };
-
   if (!stadiumData) return <p className="text-center">Đang tải dữ liệu...</p>;
 
   return (
     <div className="container py-5">
-      <Swiper modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }} className="mb-4">
-        {stadiumData.images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <img src={image} className="img-fluid w-100 rounded" alt="Sân bóng" />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
       <div className="row">
         <div className="col-md-6">
           <h2>{stadiumData.stadiumName}</h2>
@@ -78,16 +64,25 @@ const SanBongDetail = () => {
               .filter((f) => f.isAvailable)
               .map((field, index) => (
                 <li key={index}>
-                  {field.name}: {formatCurrency(field.price)}
+                  {field.name}, số lượng sân {field.count} - Giá thuê: {formatCurrency(field.price)}
                 </li>
               ))}
           </ul>
           <p>
             <strong>Chủ sân:</strong> {stadiumData.owner.name} ({stadiumData.owner.phone})
           </p>
-          <button className="btn btn-primary mt-3" onClick={handleOrder}>
-            Đặt sân ngay
-          </button>
+          {currentUser && currentUser.role === ROLE_MANAGER.USER && (
+            <button className="btn btn-primary mt-3" onClick={handleOrder}>
+              Đặt sân ngay
+            </button>
+          )}
+
+          {Object.keys(currentUser).length === 0 && (
+            <Link href="/dang-nhap">
+              <button className="btn btn-primary mt-3">Đăng nhập để đặt sân</button>
+            </Link>
+          )}
+
         </div>
         <div className="col-md-6">
           {stadiumData && (
@@ -101,25 +96,22 @@ const SanBongDetail = () => {
             ></iframe>
           )}
         </div>
+
+        <div className="col-md-12 mt-4">
+          <h4>Mô tả</h4>
+          <p>{stadiumData.description}</p>
+          <Swiper modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }} className="mb-4">
+            {stadiumData.images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <img src={image} className="img-fluid w-100 rounded" alt="Sân bóng" />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       {/* Modal đặt sân */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Xác nhận đặt sân</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Bạn có chắc chắn muốn đặt sân này không?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Hủy
-          </Button>
-          <Button variant="primary" onClick={handleConfirm}>
-            Xác nhận
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <OrderStadiumModal open={showModal} onClose={() => setShowModal(false)} stadiumData={stadiumData} />
     </div>
   );
 };
