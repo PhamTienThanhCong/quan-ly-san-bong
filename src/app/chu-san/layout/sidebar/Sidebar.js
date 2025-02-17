@@ -60,7 +60,30 @@ const MSidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
               {/* ------------------------------------------- */}
               {/* Logo */}
               {/* ------------------------------------------- */}
-              <Logo img="/img/logo.png" />
+              {/* <Logo img="/img/logo.png" /> */}
+
+              {/* title ưeb */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  mt: 2,
+                  px: 2
+                }}
+              >
+                <img src="/img/logo.png" alt="logo" style={{ width: "70px", height: "70px" }} />
+                <Box
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: "medium",
+                    fontSize: "16px"
+                  }}
+                >
+                  Quản lý sân bóng
+                </Box>
+              </Box>
+
               <Box>
                 {/* ------------------------------------------- */}
                 {/* Sidebar Items */}
@@ -105,7 +128,26 @@ const MSidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
           {/* ------------------------------------------- */}
           {/* Logo */}
           {/* ------------------------------------------- */}
-          <Logo img="/img/logo.png" />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              mt: 2,
+              px: 2
+            }}
+          >
+            <img src="/img/logo.png" alt="logo" style={{ width: "70px", height: "70px" }} />
+            <Box
+              sx={{
+                color: "text.primary",
+                fontWeight: "medium",
+                fontSize: "16px"
+              }}
+            >
+              Quản lý sân bóng
+            </Box>
+          </Box>
           {/* ------------------------------------------- */}
           {/* Sidebar Items */}
           {/* ------------------------------------------- */}

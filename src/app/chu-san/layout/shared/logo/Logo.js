@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import Image from "next/image";
 import { WEB_NAME } from "@quanlysanbong/constants/MainContent";
 
@@ -13,8 +13,9 @@ const LinkStyled = styled(Link)(() => ({
 const Logo = () => {
   return (
     <LinkStyled href="/">
-      <Image src="/img/logo.png" alt="logo" height={70} width={174} priority />
-      {WEB_NAME}
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Image src="/img/logo.png" alt="logo" height={70} width={70} priority />
+      </Box>
     </LinkStyled>
   );
 };

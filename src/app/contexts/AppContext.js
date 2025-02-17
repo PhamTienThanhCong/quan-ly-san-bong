@@ -47,7 +47,9 @@ export function AppProvider({ children }) {
     fetchData();
   }, []);
 
-  return <AppContext.Provider value={{ currentUser: user }}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={{ currentUser: user, updateUser: setUser, loading }}>{children}</AppContext.Provider>
+  );
 }
 
 export function useApp() {

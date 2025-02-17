@@ -24,7 +24,8 @@ import ImagePreview from "@quanlysanbong/app/chu-san/components/ImagePreview";
 import SearchAddressComponent from "../../components/SearchAddressComponent";
 import SelectStadiumComponent from "../../components/SelectStadiumComponent";
 import toast from "react-hot-toast";
-import SendRequest from "@quanlysanbong/utils/SendRequest";
+import SendRequest, { loadingUi } from "@quanlysanbong/utils/SendRequest";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 
 const fieldSizes = {
   5: {
@@ -54,6 +55,8 @@ const fieldSizes = {
 };
 
 const CreateStadiumPage = () => {
+  const { currentUser } = useApp();
+
   const [stadiumName, setStadiumName] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
@@ -77,7 +80,7 @@ const CreateStadiumPage = () => {
           return;
         }
       }
-
+      loadingUi(true);
       // Upload tất cả ảnh song song bằng Promise.all
       const uploadImages = images.map(async (image) => {
         const formData = new FormData();
@@ -110,19 +113,21 @@ const CreateStadiumPage = () => {
         fields
       };
 
-      console.log("Dữ liệu gửi đi:", data);
-
       // Gửi request thêm sân bóng
-      // const res = await SendRequest("/api/stadium", "POST", data);
+      const res = await SendRequest("POST", "/api/stadiums", data);
 
-      // if (res.data) {
-      //   toast.success("Thêm sân bóng thành công");
-      // } else {
-      //   toast.error("Thêm sân bóng thất bại");
-      // }
+      toast.success("Thêm sân bóng thành công");
+      // reset form
+      setStadiumName("");
+      setDescription("");
+      setImages([]);
+      setLocation("");
+      setLocationDetail("");
+      setFields(fieldSizes);
     } catch (error) {
       console.error("Lỗi trong quá trình xử lý:", error);
       toast.error("Đã xảy ra lỗi, vui lòng thử lại!");
+      loadingUi(false);
     }
   };
 
@@ -144,7 +149,7 @@ const CreateStadiumPage = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <SearchAddressComponent className={""} onSearch={setLocation} oldSearch="" />
+            <SearchAddressComponent className={""} onSearch={setLocation} oldSearch={currentUser?.address || ""} />
 
             <TextField
               label="Địa chỉ sân"

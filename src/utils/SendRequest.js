@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const loadingUi = (isShow) => {
+export const loadingUi = (isShow) => {
   const loadingUiDiv = document.getElementById("loading-full-screen");
   if (!loadingUiDiv) return;
   if (isShow) {

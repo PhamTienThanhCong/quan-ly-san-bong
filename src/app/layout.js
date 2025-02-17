@@ -1,4 +1,3 @@
-import Script from "next/script";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Toaster } from "react-hot-toast";
 import { AppProvider } from "./contexts/AppContext";
@@ -8,7 +7,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* favicon */}
-        <link rel="icon" href="./img/icon.png" />
+        <link rel="icon" href="/img/icon.png" />
       </head>
       <body>
         <AppProvider>

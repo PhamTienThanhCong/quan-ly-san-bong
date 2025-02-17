@@ -74,7 +74,18 @@ export async function PUT(req) {
     const db = client.db("accounts");
     const accountsCollection = db.collection("users");
 
-    const { id, name, phone, address, bio, active = true } = await req.json();
+    const {
+      id,
+      avatar,
+      name,
+      phone,
+      address,
+      bio,
+      bank_info,
+      bank_info_number,
+      active = true,
+      password = ""
+    } = await req.json();
 
     // convert id to ObjectId
     const ObjectId = getObjectId(id);
@@ -88,6 +99,29 @@ export async function PUT(req) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
+    if (password) {
+      // Mã hóa mật khẩu trước khi lưu vào database
+      const hashedPassword = await encrypt(password);
+
+      // Cập nhật mật khẩu
+      await accountsCollection.updateOne(
+        {
+          _id: ObjectId
+        },
+        {
+          $set: {
+            password: hashedPassword,
+            updated_at: new Date()
+          }
+        }
+      );
+      return NextResponse.json({
+        success: true,
+        message: "Cập nhật thông tin thành công",
+        data: { message: "Password updated" }
+      });
+    }
+
     // Cập nhật thông tin user
     await accountsCollection.updateOne(
       {
@@ -96,10 +130,13 @@ export async function PUT(req) {
       {
         $set: {
           name,
+          avatar,
           phone,
           address,
           bio,
           active,
+          bank_info,
+          bank_info_number,
           updated_at: new Date()
         }
       }

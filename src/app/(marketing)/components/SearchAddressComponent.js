@@ -1,35 +1,65 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const SearchAddressComponent = (props) => {
+const SearchAddressComponent = ({ onSearch, className, oldSearch = "" }) => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
 
   const [search, setSearch] = useState({
-    province: "1",
+    province: "",
     district: "",
     ward: ""
   });
 
   const allDistricts = useRef({});
   const allWards = useRef({});
+  const oldSearchedsRef = useRef(false);
+
+  useEffect(() => {
+    if (oldSearch.length > 0 && !oldSearchedsRef.current) {
+      const dataArr = oldSearch.split(", ");
+      let provinceStr = "";
+      let districtStr = "";
+      let wardStr = "";
+
+      if (dataArr.length === 3) {
+        [wardStr, districtStr, provinceStr] = dataArr;
+      }
+      if (dataArr.length === 2) {
+        [districtStr, provinceStr] = dataArr;
+      }
+      if (dataArr.length === 1) {
+        [provinceStr] = dataArr;
+      }
+
+      const province = provinces.find((p) => p.name.toLowerCase() === provinceStr.toLowerCase());
+      const district = districts.find((d) => d.name.toLowerCase() === districtStr.toLowerCase());
+      const ward = wards.find((w) => w.name.toLowerCase() === wardStr.toLowerCase());
+
+      setSearch({
+        province: province?.id || "",
+        district: district?.id || "",
+        ward: ward?.id || ""
+      });
+    }
+  }, [districts, oldSearch, provinces, wards]);
 
   useEffect(() => {
     let address = "";
     if (search.ward) {
-      const ward = wards.find((ward) => ward.id === search.ward);
-      address = ward?.name || "" + ", ";
+      const ward = wards.find((w) => w.id === search.ward);
+      address = (ward?.name || "") + ", ";
     }
     if (search.district) {
-      const district = districts.find((district) => district.id === search.district);
-      address += district?.name || "" + ", ";
+      const district = districts.find((d) => d.id === search.district);
+      address += (district?.name || "") + ", ";
     }
     if (search.province) {
-      const province = provinces.find((province) => province.id === search.province);
+      const province = provinces.find((p) => p.id === search.province);
       address += province?.name || "";
     }
-    props.onSearch(address);
-  }, [districts, props, provinces, search, wards]);
+    onSearch(address);
+  }, [districts, onSearch, provinces, search, wards]);
 
   const getDistricts = useCallback((provinceId) => {
     if (allDistricts.current[provinceId]) {
@@ -59,32 +89,43 @@ const SearchAddressComponent = (props) => {
   }, []);
 
   useEffect(() => {
+    getWards(search.district);
+  }, [getWards, search.district]);
+
+  useEffect(() => {
+    getDistricts(search.province);
+  }, [getDistricts, search.province]);
+
+  useEffect(() => {
     fetch("https://open.oapi.vn/location/provinces?size=100")
       .then((response) => response.json())
       .then((data) => setProvinces(data.data));
   }, []);
 
   const handleProvinceChange = (e) => {
+    oldSearchedsRef.current = true;
     const provinceId = e.target.value;
     setSearch({
       province: provinceId,
       district: "",
       ward: ""
     });
-    getDistricts(provinceId);
   };
 
   const handleDistrictChange = (e) => {
+    oldSearchedsRef.current = true;
+
     const districtId = e.target.value;
     setSearch({
       ...search,
       district: districtId,
       ward: ""
     });
-    getWards(districtId);
   };
 
   const handleWardChange = (e) => {
+    oldSearchedsRef.current = true;
+
     setSearch({
       ...search,
       ward: e.target.value
@@ -93,7 +134,7 @@ const SearchAddressComponent = (props) => {
 
   return (
     <>
-      <div className={`${props.className}`}>
+      <div className={`${className}`}>
         <select className={`form-select`} value={search.province} onChange={handleProvinceChange}>
           <option value="">Chọn Tỉnh/Thành phố</option>
           {provinces.map((province) => (
@@ -103,7 +144,7 @@ const SearchAddressComponent = (props) => {
           ))}
         </select>
       </div>
-      <div className={`${props.className}`}>
+      <div className={`${className}`}>
         <select className={`form-select`} value={search.district} onChange={handleDistrictChange}>
           <option value="">Chọn Quận/Huyện</option>
           {districts.map((district) => (
@@ -113,7 +154,7 @@ const SearchAddressComponent = (props) => {
           ))}
         </select>
       </div>
-      <div className={`${props.className}`}>
+      <div className={`${className}`}>
         <select className={`form-select`} value={search.ward} onChange={handleWardChange}>
           <option value="">Chọn Phường/Xã</option>
           {wards.map((ward) => (

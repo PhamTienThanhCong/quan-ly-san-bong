@@ -7,5 +7,5 @@ export const ROLE_MANAGER = {
 export const ROLE_MANAGER_TEXT = {
   [ROLE_MANAGER.ADMIN]: "Quản trị viên",
   [ROLE_MANAGER.USER]: "Người dùng",
-  [ROLE_MANAGER.SALE]: "Nhân viên bán hàng"
+  [ROLE_MANAGER.SALE]: "Chủ sân"
 };

@@ -4,6 +4,7 @@ import { Avatar, Box, Menu, Button, IconButton, MenuItem, ListItemIcon, ListItem
 import { IconKey, IconUser, IconUserEdit } from "@tabler/icons-react";
 import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 import { ROLE_MANAGER_TEXT } from "@quanlysanbong/constants/System";
+import Link from "next/link";
 
 const Profile = () => {
   const { currentUser } = useApp();
@@ -36,7 +37,7 @@ const Profile = () => {
           mr: 1
         }}
       >
-        Hi, {currentUser?.profile?.firstName || ""}
+        Hi, {currentUser?.name || ""}
       </Box>
 
       <IconButton
@@ -53,7 +54,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src="/images/profile/user-1.jpg"
+          src={currentUser?.avatar || ""}
           alt="image"
           sx={{
             width: 35,
@@ -86,17 +87,11 @@ const Profile = () => {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <IconUser width={20} />
-          </ListItemIcon>
-          <ListItemText>
-            {currentUser?.profile?.firstName || ""} {currentUser?.profile?.lastName || ""}
-          </ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
             <IconUserEdit width={20} />
           </ListItemIcon>
-          <ListItemText>Tài khoản của tôi</ListItemText>
+          <Link href="/trang-ca-nhan">
+            <ListItemText>Tài khoản của tôi</ListItemText>
+          </Link>
         </MenuItem>
         <Box mt={1} py={1} px={2}>
           <Button variant="outlined" color="primary" fullWidth onClick={logout}>

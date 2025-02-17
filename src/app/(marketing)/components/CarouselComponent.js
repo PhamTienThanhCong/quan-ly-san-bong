@@ -12,7 +12,8 @@ const LinkName = [
   { name: "Danh sách sân bóng", path: "/san-bong" },
   { name: "Liên hệ", path: "/lien-he" },
   { name: "Đăng nhập", path: "/dang-nhap" },
-  { name: "Đăng ký", path: "/dang-ky" }
+  { name: "Đăng ký", path: "/dang-ky" },
+  { name: "Trang cá nhân", path: "/trang-ca-nhan" }
 ];
 
 const CarouselComponent = ({ pathUrl }) => {
