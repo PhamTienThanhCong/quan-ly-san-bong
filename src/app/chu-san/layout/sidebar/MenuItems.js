@@ -7,7 +7,8 @@ import {
   IconSoccerField,
   IconPlus,
   IconUser,
-  IconUsers
+  IconUsers,
+  IconMessage
 } from "@tabler/icons-react";
 import { uniqueId } from "lodash";
 
@@ -33,6 +34,12 @@ const Menuitems = [
     title: "Lịch sử nạp rút",
     icon: IconHistory,
     href: "/chu-san/nap-rut"
+  },
+  {
+    id: uniqueId(),
+    title: "Lịch sử giao dịch",
+    icon: IconHistory,
+    href: "/chu-san/lich-su-giao-dich"
   },
   {
     navlabel: true,
@@ -63,7 +70,13 @@ const Menuitems = [
     href: "/chu-san/danh-sach-chu-san",
     onlyAdmin: true
   },
-
+  {
+    id: uniqueId(),
+    title: "Danh sách khiếu nại",
+    icon: IconMessage,
+    href: "/chu-san/danh-sach-feedback",
+    onlyAdmin: true
+  },
   {
     navlabel: true,
     subheader: "Quản lý sân"
