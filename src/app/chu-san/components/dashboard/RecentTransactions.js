@@ -21,7 +21,7 @@ const RecentNotifies = () => {
   const [loading, setLoading] = useState(false);
 
   // Fetch dữ liệu từ API
-  const fetchTodayBookings = async () => {
+  const fetchTodayBookings = async (currentUser) => {
     setLoading(true);
     try {
       const res = await SendRequest("GET", "/api/orders", {
@@ -42,8 +42,9 @@ const RecentNotifies = () => {
   };
 
   useEffect(() => {
-    fetchTodayBookings();
-  }, []);
+    if (Object.keys(currentUser).length === 0) return;
+    fetchTodayBookings(currentUser);
+  }, [currentUser]);
 
   return (
     <DashboardCard title="Sân được đặt hôm nay">

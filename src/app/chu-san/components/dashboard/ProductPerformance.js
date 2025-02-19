@@ -23,7 +23,7 @@ const ProductPerformance = () => {
   const [loading, setLoading] = useState(false);
 
   // Fetch dữ liệu từ API
-  const fetchData = async () => {
+  const fetchData = async (currentUser) => {
     setLoading(true);
     try {
       const res = await SendRequest("GET", "/api/orders", {
@@ -59,8 +59,9 @@ const ProductPerformance = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (Object.keys(currentUser).length === 0) return;
+    fetchData(currentUser);
+  }, [currentUser]);
 
   return (
     <DashboardCard

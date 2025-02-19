@@ -22,7 +22,7 @@ const SalesOverview = () => {
   const secondary = theme.palette.secondary.main;
 
   // Hàm gọi API để lấy dữ liệu đặt sân
-  const fetchBookings = async () => {
+  const fetchBookings = async (currentUser) => {
     setLoading(true);
     try {
       const res = await SendRequest("GET", "/api/orders", {
@@ -53,8 +53,9 @@ const SalesOverview = () => {
   };
 
   useEffect(() => {
-    fetchBookings();
-  }, []);
+    if (Object.keys(currentUser).length === 0) return;
+    fetchBookings(currentUser);
+  }, [currentUser]);
 
   useEffect(() => {
     if (data.length) {

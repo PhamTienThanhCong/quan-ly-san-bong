@@ -52,12 +52,6 @@ const Menuitems = [
     href: "/chu-san/danh-sach-dat-san"
   },
   {
-    id: uniqueId(),
-    title: "Thống kê đặt sân",
-    icon: IconChartBar,
-    href: "/chu-san/thong-ke-dat-san"
-  },
-  {
     navlabel: true,
     subheader: "Quản lý người dùng",
     onlyAdmin: true
