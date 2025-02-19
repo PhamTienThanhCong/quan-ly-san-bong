@@ -39,7 +39,8 @@ const Menuitems = [
     id: uniqueId(),
     title: "Lịch sử giao dịch",
     icon: IconHistory,
-    href: "/chu-san/lich-su-giao-dich"
+    href: "/chu-san/lich-su-giao-dich",
+    onlyAdmin: true
   },
   {
     navlabel: true,
