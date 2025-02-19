@@ -12,11 +12,13 @@ import {
   Link
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import DashboardCard from "@quanlysanbong/app/chu-san//components/shared/DashboardCard";
-import { convertDate, formatCurrency } from "@quanlysanbong/utils/Main";
+import DashboardCard from "@quanlysanbong/app/chu-san/components/shared/DashboardCard";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
+import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 
 const ProductPerformance = () => {
+  const { currentUser } = useApp();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -24,12 +26,30 @@ const ProductPerformance = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await SendRequest("GET", "/api/maintenances");
+      const res = await SendRequest("GET", "/api/orders", {
+        ownerId: currentUser.role === ROLE_MANAGER.SALE ? currentUser._id : ""
+      });
       if (res.payload) {
-        let _data = res.payload;
-        // lấy 5 sản phẩm gần đây
-        _data = _data.slice(0, 10);
-        setData(_data);
+        // Tính số lần đặt của từng sân
+        const stadiumCounts = res.payload.reduce((acc, booking) => {
+          const stadiumId = booking.stadiumId;
+          if (!acc[stadiumId]) {
+            acc[stadiumId] = {
+              count: 0,
+              stadiumName: booking.stadium.stadiumName,
+              location: booking.stadium.location
+            };
+          }
+          acc[stadiumId].count += 1;
+          return acc;
+        }, {});
+
+        // Chuyển đổi thành mảng và sắp xếp theo số lần đặt giảm dần
+        const sortedStadiums = Object.values(stadiumCounts).sort((a, b) => b.count - a.count);
+
+        // Lấy top 5 sân được đặt nhiều nhất
+        const top5Stadiums = sortedStadiums.slice(0, 5);
+        setData(top5Stadiums);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -44,9 +64,9 @@ const ProductPerformance = () => {
 
   return (
     <DashboardCard
-      title="Lịch trình bảo trì"
+      title="Top 5 sân được đặt nhiều nhất"
       action={
-        <Link to="/maintenances">
+        <Link href="/chu-san/danh-sach-dat-san">
           <Button variant="contained" color="primary" size="small">
             Xem tất cả
           </Button>
@@ -70,55 +90,46 @@ const ProductPerformance = () => {
               <TableRow>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Tên sản phẩm
+                    Tên sân
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Danh mục
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight={600}>
-                    Số lượng
+                    Địa điểm
                   </Typography>
                 </TableCell>
                 <TableCell align="right">
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Giá
+                    Số lần đặt
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Trạng thái bảo trì
+                    Trạng thái
                   </Typography>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((item) => (
-                <TableRow key={item._id}>
+              {data.map((stadium, index) => (
+                <TableRow key={index}>
                   <TableCell>
                     <Typography variant="subtitle2" fontWeight={500}>
-                      {item.name}
+                      {stadium.stadiumName}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="subtitle2" fontWeight={400}>
-                      {/* {CATEGORY_LIST.find((category) => category.value === item.category)?.name} */}
-                      {item.category}
+                      {stadium.location}
                     </Typography>
                   </TableCell>
-                  <TableCell>
-                    <Typography>{item.quantity}</Typography>
-                  </TableCell>
                   <TableCell align="right">
-                    <Typography variant="h6">{formatCurrency(item.price)} VND</Typography>
+                    <Typography variant="h6">{stadium.count}</Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={item.maintenanced ? "Đã bảo trì" : "Chưa bảo trì"}
-                      color={item.maintenanced ? "success" : "error"}
+                      label={stadium.count > 0 ? "Hoạt động" : "Không hoạt động"}
+                      color={stadium.count > 0 ? "success" : "error"}
                       size="small"
                     />
                   </TableCell>

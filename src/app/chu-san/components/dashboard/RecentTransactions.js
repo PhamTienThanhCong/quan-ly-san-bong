@@ -10,88 +10,93 @@ import {
   TimelineContent,
   timelineOppositeContentClasses
 } from "@mui/lab";
-import { Link, Typography, Box, CircularProgress } from "@mui/material";
+import { Typography, Box, CircularProgress } from "@mui/material";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
-import { convertDate } from "@quanlysanbong/utils/Main";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
+import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
 
 const RecentNotifies = () => {
+  const { currentUser } = useApp();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Fetch dữ liệu từ API
-  const fetchNotifications = async () => {
+  const fetchTodayBookings = async () => {
     setLoading(true);
     try {
-      const res = await SendRequest("GET", "/api/notifications");
+      const res = await SendRequest("GET", "/api/orders", {
+        ownerId: currentUser.role === ROLE_MANAGER.SALE ? currentUser._id : ""
+      });
       if (res.payload) {
-        let _data = res.payload;
-        // lấy 10 thông báo gần đây
-        _data = _data.slice(0, 5);
-        setData(_data);
+        // Lấy ngày hôm nay
+        const today = new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString().split("T")[0];
+        // Lọc các đặt sân có ngày trùng với hôm nay
+        const todayBookings = res.payload.filter((booking) => booking.date === today);
+        setData(todayBookings);
       }
     } catch (error) {
-      console.error("Error fetching notifications:", error);
+      console.error("Error fetching bookings:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchNotifications();
+    fetchTodayBookings();
   }, []);
 
   return (
-    <DashboardCard title="Thông báo gần đây">
+    <DashboardCard title="Sân được đặt hôm nay">
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
           <CircularProgress />
         </Box>
+      ) : data.length === 0 ? (
+        <Typography variant="body1" align="center" sx={{ py: 3 }}>
+          Hôm nay chưa có ai đặt sân.
+        </Typography>
       ) : (
-        <Timeline
-          className="theme-timeline"
-          nonce={undefined}
-          onResize={undefined}
-          onResizeCapture={undefined}
-          sx={{
-            p: 0,
-            mb: "-40px",
-            "& .MuiTimelineConnector-root": {
-              width: "1px",
-              backgroundColor: "#efefef"
-            },
-            [`& .${timelineOppositeContentClasses.root}`]: {
-              flex: 0.5,
-              paddingLeft: 0
-            }
-          }}
-        >
-          {data.map((item) => (
-            <TimelineItem key={item.productId}>
-              <TimelineOppositeContent>
-                {item.maintenanceDateNext ? convertDate(item.maintenanceDateNext) : "Cảnh báo"}
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot
-                  color={item.type === "maintenance" ? "primary" : item.type === "low_stock" ? "warning" : "success"}
-                  variant="outlined"
-                />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Typography fontWeight="600">{item.message}</Typography>
-                {item?.transaction_id ? (
-                  <Link href={`/orders/${item.transaction_id}`} underline="none">
-                    Xem đơn hàng
-                  </Link>
-                ) : (
-                  <Link href={`/products/${item.productId}`} underline="none">
-                    Xem sản phẩm
-                  </Link>
-                )}
-              </TimelineContent>
-            </TimelineItem>
-          ))}
-        </Timeline>
+        <Box display="flex" justifyContent="center" height="25vh">
+          <Timeline
+            className="theme-timeline"
+            nonce={undefined}
+            onResize={undefined}
+            onResizeCapture={undefined}
+            sx={{
+              p: 0,
+              mb: "-40px",
+              "& .MuiTimelineConnector-root": {
+                width: "1px",
+                backgroundColor: "#efefef"
+              },
+              [`& .${timelineOppositeContentClasses.root}`]: {
+                flex: 0.5,
+                paddingLeft: 0
+              }
+            }}
+          >
+            {data.map((booking) => (
+              <TimelineItem key={booking._id}>
+                <TimelineOppositeContent>
+                  <Typography variant="body2" color="textSecondary">
+                    {booking.time}
+                  </Typography>
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot color="primary" variant="outlined" />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Typography fontWeight="600">{booking.stadium.stadiumName}</Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {booking.stadium.location}
+                  </Typography>
+                  <Typography variant="body2">Người đặt: {booking.user.name}</Typography>
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+          </Timeline>
+        </Box>
       )}
     </DashboardCard>
   );

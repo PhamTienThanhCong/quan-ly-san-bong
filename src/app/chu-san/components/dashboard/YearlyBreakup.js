@@ -5,10 +5,14 @@ import { Grid, Stack, Typography, Avatar, CircularProgress, Box } from "@mui/mat
 import { IconArrowUpLeft } from "@tabler/icons-react";
 import DashboardCard from "@quanlysanbong/app/chu-san/components/shared/DashboardCard";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
+import { formatCurrency } from "@quanlysanbong/utils/Main";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const ProductTotal = () => {
+  const { currentUser } = useApp();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
@@ -23,38 +27,25 @@ const ProductTotal = () => {
   const successlight = theme.palette.success.light;
 
   // Hàm lấy dữ liệu từ API
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const res = await SendRequest("GET", "/api/products");
-      if (res.payload) {
-        setData(res.payload);
-        processProductData(res.payload);
-      }
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Xử lý dữ liệu sản phẩm cho biểu đồ
-  const processProductData = (products) => {
-    const totalProducts = products.reduce((acc, product) => acc + product.stock.total, 0);
-    const availableProducts = products.reduce((acc, product) => acc + product.stock.available, 0);
-    const usedProducts = products.reduce((acc, product) => acc + product.stock.used, 0);
+  const processProductData = (currentUser) => {
+    const totalPrice = currentUser.totalPrice;
+    const totalWithdrawn = currentUser.withdrawn;
 
-    setTotal(totalProducts);
-    setAvailable(availableProducts);
-    setUsed(usedProducts);
+    setTotal(totalPrice);
+    setAvailable(totalPrice - totalWithdrawn);
+    setUsed(totalWithdrawn);
 
     // Cập nhật dữ liệu cho biểu đồ
-    setSeries([availableProducts, usedProducts, totalProducts - availableProducts - usedProducts]);
+    setSeries([totalPrice - totalWithdrawn, totalWithdrawn, 0]);
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (Object.keys(currentUser).length !== 0) {
+      processProductData(currentUser);
+    }
+  }, [currentUser]);
 
   // Cấu hình biểu đồ
   const optionscolumnchart = {
@@ -86,7 +77,7 @@ const ProductTotal = () => {
   };
 
   return (
-    <DashboardCard title="Tổng quan sản phẩm">
+    <DashboardCard title="Tổng quan tài chính">
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" height={150}>
           <CircularProgress />
@@ -95,31 +86,26 @@ const ProductTotal = () => {
         <Grid container spacing={3}>
           {/* Thông tin sản phẩm */}
           <Grid item xs={7} sm={7}>
-            <Typography variant="h3" fontWeight="700">
-              Tổng số: {total}
+            <Typography variant="h5" fontWeight="500">
+              Tổng tiền: {formatCurrency(total)}
             </Typography>
             <Stack direction="row" spacing={1} mt={1} alignItems="center">
-              <Avatar sx={{ bgcolor: successlight, width: 27, height: 27 }}>
-                <IconArrowUpLeft width={20} color="#39B69A" />
-              </Avatar>
-              <Typography variant="subtitle2" fontWeight="600">
-                {Math.round((available / total) * 100)}%
-              </Typography>
+              <IconArrowUpLeft size={20} color={successlight} />
               <Typography variant="subtitle2" color="textSecondary">
-                sản phẩm có sẵn
+                Còn lại: {formatCurrency(available)}
               </Typography>
             </Stack>
             <Stack spacing={3} mt={5} direction="row">
               <Stack direction="row" spacing={1} alignItems="center">
                 <Avatar sx={{ width: 9, height: 9, bgcolor: primary }}></Avatar>
                 <Typography variant="subtitle2" color="textSecondary">
-                  Kho
+                  Còn lại
                 </Typography>
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center">
                 <Avatar sx={{ width: 9, height: 9, bgcolor: primarylight }}></Avatar>
                 <Typography variant="subtitle2" color="textSecondary">
-                  Đã xuất
+                  Đã rút
                 </Typography>
               </Stack>
             </Stack>

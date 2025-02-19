@@ -13,54 +13,66 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  Grid,
+  Avatar
 } from "@mui/material";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import PageContainer from "../../components/container/PageContainer";
 import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 import { convertDate, convertDateTime } from "@quanlysanbong/utils/Main";
-import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
+import { ROLE_MANAGER, ROLE_MANAGER_TEXT } from "@quanlysanbong/constants/System";
+import SalesOverview from "../../components/dashboard/SalesOverview";
+import MonthlyEarnings from "../../components/dashboard/MonthlyEarnings";
+import RecentNotifies from "../../components/dashboard/RecentTransactions";
+import ProductPerformance from "../../components/dashboard/ProductPerformance";
+import YearlyBreakup from "../../components/dashboard/YearlyBreakup";
 
 const BookingHistoryPage = () => {
   const { currentUser } = useApp();
-  const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await SendRequest("GET", "/api/orders", {
-        ownerId: currentUser.role === ROLE_MANAGER.SALE ? currentUser._id : ""
-      });
-      if (res.payload) {
-        setBookings(res.payload);
-      }
-    } catch (error) {
-      console.error("Error fetching bookings:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (Object.keys(currentUser).length === 0) return;
-    fetchData();
-  }, [currentUser, fetchData]);
-
-  const handleReload = () => {
-    fetchData();
-  };
 
   return (
     <PageContainer title="Lịch sử đặt sân" description="Danh sách các sân bạn đã đặt">
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4">Lịch sử đặt sân</Typography>
-        <Button variant="contained" color="primary" onClick={handleReload}>
-          Tải lại
-        </Button>
-      </Box>
-
-      {/* Code here */}
+      <PageContainer title="Dashboard" description="this is Dashboard">
+        <Box>
+          <Grid container spacing={3}>
+            <Grid item xs={12} lg={8}>
+              <SalesOverview />
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Paper sx={{ padding: 3, textAlign: "center" }}>
+                    <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+                      <Avatar
+                        src={currentUser.avatar || "/default-avatar.png"}
+                        alt={currentUser.name}
+                        sx={{ width: 80, height: 80, mb: 2 }}
+                      />
+                      <Typography variant="h4">Xin chào, {currentUser.name}!</Typography>
+                      <Typography marginTop={1} variant="subtitle1" color="textSecondary">
+                        Vai trò: {ROLE_MANAGER_TEXT[currentUser.role]}
+                      </Typography>
+                      <Typography marginTop={2} variant="h4" color={currentUser.active ? "green" : "red"}>
+                        {currentUser.active ? "Hoạt động" : "Bị khóa"}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <YearlyBreakup />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} lg={5}>
+              <RecentNotifies />
+            </Grid>
+            <Grid item xs={12} lg={7}>
+              <ProductPerformance />
+            </Grid>
+          </Grid>
+        </Box>
+      </PageContainer>
     </PageContainer>
   );
 };

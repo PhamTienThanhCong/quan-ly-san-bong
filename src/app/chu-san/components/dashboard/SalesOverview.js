@@ -4,11 +4,14 @@ import { useTheme } from "@mui/material/styles";
 import DashboardCard from "@quanlysanbong/app/chu-san/components/shared/DashboardCard";
 import dynamic from "next/dynamic";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
+import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
+import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const SalesOverview = () => {
-  const [month, setMonth] = useState(1);
+  const { currentUser } = useApp();
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [series, setSeries] = useState([]);
@@ -18,23 +21,18 @@ const SalesOverview = () => {
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
 
-  // Hàm gọi API để lấy dữ liệu giao dịch
-  useEffect(() => {
-    // get current month
-    const currentMonth = new Date().getMonth() + 1;
-    setMonth(currentMonth);
-  }, []);
-
-  // Hàm gọi API để lấy dữ liệu giao dịch
-  const fetchTransactions = async () => {
+  // Hàm gọi API để lấy dữ liệu đặt sân
+  const fetchBookings = async () => {
     setLoading(true);
     try {
-      const res = await SendRequest("GET", "/api/transactions");
+      const res = await SendRequest("GET", "/api/orders", {
+        ownerId: currentUser.role === ROLE_MANAGER.SALE ? currentUser._id : ""
+      });
       if (res.payload) {
         setData(res.payload);
       }
     } catch (error) {
-      console.error("Error fetching transactions:", error);
+      console.error("Error fetching bookings:", error);
     } finally {
       setLoading(false);
     }
@@ -43,25 +41,19 @@ const SalesOverview = () => {
   // Xử lý dữ liệu giao dịch cho biểu đồ
   const processData = () => {
     const filteredData = data.filter((item) => {
-      const transactionMonth = new Date(item.created_at).getMonth() + 1;
-      return transactionMonth === month;
+      const bookingMonth = new Date(item.date).getMonth() + 1;
+      return bookingMonth === month;
     });
 
-    const categories = filteredData.map((item) => new Date(item.created_at).toLocaleDateString("vi-VN"));
-
-    const importData = filteredData.filter((item) => item.type === "import").map((item) => item.totalPrice);
-
-    const exportData = filteredData.filter((item) => item.type === "export").map((item) => item.totalPrice);
+    const categories = filteredData.map((item) => new Date(item.date).toLocaleDateString("vi-VN"));
+    const depositData = filteredData.map((item) => item.deposit);
 
     setCategories(categories);
-    setSeries([
-      { name: "Nhập hàng", data: importData },
-      { name: "Xuất hàng", data: exportData }
-    ]);
+    setSeries([{ name: "Đặt cọc", data: depositData }]);
   };
 
   useEffect(() => {
-    fetchTransactions();
+    fetchBookings();
   }, []);
 
   useEffect(() => {
@@ -118,21 +110,12 @@ const SalesOverview = () => {
 
   return (
     <DashboardCard
-      title="Tổng quan giao dịch"
+      title="Tổng quan đặt sân"
       action={
         <Select labelId="month-dd" id="month-dd" value={month} size="small" onChange={(e) => setMonth(e.target.value)}>
-          <MenuItem value={1}>Tháng 1</MenuItem>
-          <MenuItem value={2}>Tháng 2</MenuItem>
-          <MenuItem value={3}>Tháng 3</MenuItem>
-          <MenuItem value={4}>Tháng 4</MenuItem>
-          <MenuItem value={5}>Tháng 5</MenuItem>
-          <MenuItem value={6}>Tháng 6</MenuItem>
-          <MenuItem value={7}>Tháng 7</MenuItem>
-          <MenuItem value={8}>Tháng 8</MenuItem>
-          <MenuItem value={9}>Tháng 9</MenuItem>
-          <MenuItem value={10}>Tháng 10</MenuItem>
-          <MenuItem value={11}>Tháng 11</MenuItem>
-          <MenuItem value={12}>Tháng 12</MenuItem>
+          {[...Array(12).keys()].map((m) => (
+            <MenuItem key={m + 1} value={m + 1}>{`Tháng ${m + 1}`}</MenuItem>
+          ))}
         </Select>
       }
     >
