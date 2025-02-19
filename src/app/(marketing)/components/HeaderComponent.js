@@ -82,7 +82,7 @@ const HeaderComponent = () => {
               Giới thiệu
             </Link>
             <Link href="/san-bong" className={`nav-item nav-link ${pathUrl === "/san-bong" ? "active" : ""}`}>
-              Danh sách sân bóng
+              Danh sách sân
             </Link>
             <Link href="/lien-he" className={`nav-item nav-link ${pathUrl === "/lien-he" ? "active" : ""}`}>
               Liên hệ

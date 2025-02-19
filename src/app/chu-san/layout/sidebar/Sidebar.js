@@ -80,7 +80,7 @@ const MSidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                     fontSize: "16px"
                   }}
                 >
-                  Quản lý sân bóng
+                  Quản lý sân
                 </Box>
               </Box>
 
@@ -145,7 +145,7 @@ const MSidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                 fontSize: "16px"
               }}
             >
-              Quản lý sân bóng
+              Quản lý sân
             </Box>
           </Box>
           {/* ------------------------------------------- */}

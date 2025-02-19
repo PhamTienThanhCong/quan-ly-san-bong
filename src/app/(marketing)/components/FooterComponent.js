@@ -18,7 +18,7 @@ const FooterComponent = () => {
                   </h4>
                 </a>
                 <p className="mb-4">
-                  Chúng tôi cung cấp dịch vụ cho thuê sân bóng chất lượng cao, với không gian rộng rãi và cơ sở vật chất
+                  Chúng tôi cung cấp dịch vụ cho thuê sân chất lượng cao, với không gian rộng rãi và cơ sở vật chất
                   hiện đại. Đặt sân ngay hôm nay để có trải nghiệm tuyệt vời!
                 </p>
                 <div className="d-flex">

@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 const LinkName = [
   { name: "Trang chủ", path: "/" },
   { name: "Giới thiệu", path: "/gioi-thieu" },
-  { name: "Danh sách sân bóng", path: "/san-bong" },
+  { name: "Danh sách sân", path: "/san-bong" },
   { name: "Liên hệ", path: "/lien-he" },
   { name: "Đăng nhập", path: "/dang-nhap" },
   { name: "Đăng ký", path: "/dang-ky" },
@@ -21,9 +21,9 @@ const CarouselComponent = ({ pathUrl }) => {
     let NameStadium = LinkName.find((item) => item.path === pathUrl)?.name || "";
     let parentPath = null;
     if (pathUrl.includes("/san-bong/")) {
-      NameStadium = "Chi Tiết Sân Bóng";
+      NameStadium = "Chi Tiết Sân";
       parentPath = {
-        name: "Danh sách sân bóng",
+        name: "Danh sách sân",
         path: "/san-bong"
       };
     }
@@ -67,9 +67,9 @@ const CarouselComponent = ({ pathUrl }) => {
                 <div className="col-xl-7">
                   <div className="text-sm-center text-md-end">
                     <h4 className="text-primary text-uppercase fw-bold mb-4">Chào Mừng Đến Với {WEB_NAME}</h4>
-                    <h1 className="display-4 text-uppercase text-white mb-4">Thuê Sân Bóng Dễ Dàng - Nhanh Chóng</h1>
+                    <h1 className="display-4 text-uppercase text-white mb-4">Thuê Sân Dễ Dàng - Nhanh Chóng</h1>
                     <p className="mb-5 fs-5">
-                      Đặt sân bóng nhanh chóng, tiện lợi với hệ thống đặt sân trực tuyến. Trải nghiệm không gian thi đấu
+                      Đặt sân nhanh chóng, tiện lợi với hệ thống đặt sân trực tuyến. Trải nghiệm không gian thi đấu
                       chuyên nghiệp ngay hôm nay!
                     </p>
                     <div className="d-flex justify-content-center justify-content-md-end">

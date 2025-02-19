@@ -91,7 +91,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           </FormGroup>
           <Typography
             component={Link}
-            href="/chu-san/quen-mat-khau"
+            href="#"
             fontWeight="500"
             sx={{
               textDecoration: "none",

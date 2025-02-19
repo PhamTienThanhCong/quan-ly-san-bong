@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 const DB_NAME = "stadiums";
 const COLLECTION_NAME = "orders";
 
-// API GET - Lấy danh sách sân bóng
+// API GET - Lấy danh sách sân
 export async function GET(req) {
   try {
     const client = await clientPromise;

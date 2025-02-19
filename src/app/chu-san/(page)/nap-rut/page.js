@@ -14,7 +14,9 @@ import {
   TableRow,
   Paper,
   Modal,
-  TextField
+  TextField,
+  Tabs,
+  Tab
 } from "@mui/material";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import PageContainer from "../../components/container/PageContainer";
@@ -22,6 +24,7 @@ import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 import { formatCurrency } from "@quanlysanbong/utils/Main";
 import toast from "react-hot-toast";
 import { ROLE_MANAGER } from "@quanlysanbong/constants/System";
+import { WEB_NAME } from "@quanlysanbong/constants/MainContent";
 
 const WithdrawalHistoryPage = () => {
   const { currentUser } = useApp();
@@ -30,6 +33,10 @@ const WithdrawalHistoryPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [banks, setBanks] = useState([]);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [selectedWithdrawal, setSelectedWithdrawal] = useState(null);
+  const [qrCode, setQrCode] = useState("");
 
   useEffect(() => {
     fetch("https://api.vietqr.io/v2/banks")
@@ -96,6 +103,47 @@ const WithdrawalHistoryPage = () => {
     }
   };
 
+  const handleConfirmPayment = async () => {
+    if (!selectedWithdrawal) return;
+    try {
+      await SendRequest("PUT", `/api/withdrawn`, {
+        id: selectedWithdrawal._id,
+        status: "SUCCESS"
+      });
+      toast.success("Thanh toán thành công");
+      setOpenConfirmModal(false);
+      fetchData();
+    } catch (error) {
+      toast.error("Thanh toán thất bại");
+    }
+  };
+
+  const handleGetQr = async (orderSuccess) => {
+    setQrCode("");
+    const content = `${WEB_NAME} tra tien ${orderSuccess?.owner?.name}`;
+
+    const payload = {
+      accountNo: orderSuccess.bank_info_number,
+      accountName: `${orderSuccess?.owner?.name}`,
+      acqId: orderSuccess.bank_info,
+      amount: orderSuccess.amount,
+      addInfo: content,
+      format: "text",
+      template: "compact2"
+    };
+
+    const res = await fetch("https://api.vietqr.io/v2/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    setQrCode(data.data.qrDataURL);
+  };
+
   return (
     <PageContainer title="Lịch sử nạp rút" description="Chi tiết lịch sử nạp rút">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
@@ -115,6 +163,10 @@ const WithdrawalHistoryPage = () => {
           <Typography variant="h6">Số tiền đã rút: {formatCurrency(currentUser.withdrawn || 0)}</Typography>
         </Box>
       )}
+      <Tabs value={tabIndex} onChange={(e, newIndex) => setTabIndex(newIndex)}>
+        <Tab label="Pending" />
+        <Tab label="Success" />
+      </Tabs>
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
           <CircularProgress />
@@ -130,31 +182,84 @@ const WithdrawalHistoryPage = () => {
                 <TableCell>Ngân hàng</TableCell>
                 <TableCell>Số tài khoản</TableCell>
                 <TableCell>Trạng thái</TableCell>
+                {currentUser.role === ROLE_MANAGER.ADMIN && <TableCell>Hành động</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
-              {withdrawals.map((withdrawal) => (
-                <TableRow key={withdrawal._id}>
-                  <TableCell>{new Date(withdrawal.created_at).toLocaleString()}</TableCell>
-                  {currentUser.role === ROLE_MANAGER.ADMIN && (
-                    <TableCell>
-                      <Typography fontSize={14}>{withdrawal?.owner?.name}</Typography>
-                      <br />
-                      {withdrawal?.owner?.email}
+              {withdrawals
+                .filter((w) => (tabIndex === 0 ? w.status === "PENDING" : w.status === "SUCCESS"))
+                .map((withdrawal) => (
+                  <TableRow key={withdrawal._id}>
+                    <TableCell>{new Date(withdrawal.created_at).toLocaleString()}</TableCell>
+                    {currentUser.role === ROLE_MANAGER.ADMIN && (
+                      <TableCell>
+                        <Typography fontSize={14}>{withdrawal?.owner?.name}</Typography>
+                        <br />
+                        {withdrawal?.owner?.email}
+                      </TableCell>
+                    )}
+                    <TableCell>{formatCurrency(withdrawal.amount)}</TableCell>
+                    <TableCell>{banks.find((bank) => bank.bin == withdrawal.bank_info)?.name}</TableCell>
+                    <TableCell>{withdrawal.bank_info_number}</TableCell>
+                    <TableCell style={{ color: withdrawal.status === "PENDING" ? "orange" : "green" }}>
+                      {withdrawal.status}
                     </TableCell>
-                  )}
-                  <TableCell>{formatCurrency(withdrawal.amount)}</TableCell>
-                  <TableCell>{banks.find((bank) => bank.bin == withdrawal.bank_info)?.name}</TableCell>
-                  <TableCell>{withdrawal.bank_info_number}</TableCell>
-                  <TableCell style={{ color: withdrawal.status === "PENDING" ? "orange" : "green" }}>
-                    {withdrawal.status}
-                  </TableCell>
-                </TableRow>
-              ))}
+                    {currentUser.role === ROLE_MANAGER.ADMIN && withdrawal.status === "PENDING" && (
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            setSelectedWithdrawal(withdrawal);
+                            setOpenConfirmModal(true);
+                            handleGetQr(withdrawal);
+                          }}
+                        >
+                          Thanh toán
+                        </Button>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
       )}
+      <Modal open={openConfirmModal} onClose={() => setOpenConfirmModal(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            p: 4,
+            borderRadius: 2,
+            boxShadow: 24
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Xác nhận thanh toán
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Hãy thanh toán số tiền {formatCurrency(selectedWithdrawal?.amount)} cho {selectedWithdrawal?.owner?.name}
+          </Typography>
+
+          <Box display="flex" justifyContent="center" mt={2}>
+            {qrCode ? <img src={qrCode} alt="QR Code" /> : <CircularProgress />}
+          </Box>
+
+          <Box display="flex" justifyContent="space-between" mt={2}>
+            <Button variant="contained" color="primary" onClick={handleConfirmPayment}>
+              Xác nhận
+            </Button>
+            <Button variant="outlined" onClick={() => setOpenConfirmModal(false)}>
+              Hủy
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
         <Box
           sx={{

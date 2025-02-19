@@ -7,7 +7,7 @@ const DB_NAME = "stadiums";
 const STADIUM_COLLECTION_NAME = "stadium";
 const COLLECTION_NAME = "orders";
 
-// API GET - Lấy danh sách sân bóng
+// API GET - Lấy danh sách sân
 export async function GET(req) {
   try {
     const client = await clientPromise;
@@ -112,13 +112,13 @@ export async function POST(req) {
 
     newOrder = { ...newOrder, _id: dataOrder.insertedId };
 
-    return NextResponse.json({ success: true, message: "Tạo sân bóng thành công", data: newOrder });
+    return NextResponse.json({ success: true, message: "Tạo sân thành công", data: newOrder });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
 
-// API PUT - Cập nhật thông tin sân bóng
+// API PUT - Cập nhật thông tin sân
 export async function PUT(req) {
   try {
     const client = await clientPromise;
@@ -162,7 +162,7 @@ export async function PUT(req) {
       }
     );
 
-    return NextResponse.json({ success: true, message: "Cập nhật sân bóng thành công" });
+    return NextResponse.json({ success: true, message: "Cập nhật sân thành công" });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

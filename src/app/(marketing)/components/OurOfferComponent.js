@@ -6,7 +6,7 @@ const OurOfferComponent = () => {
           <h4 className="text-primary">Lợi Ích Dành Cho Chủ Sân</h4>
           <h1 className="display-5 mb-4">Tối Ưu Hóa Doanh Thu - Quản Lý Sân Hiệu Quả</h1>
           <p className="mb-0">
-            Chúng tôi mang đến giải pháp đặt sân hiện đại, giúp bạn khai thác tối đa tiềm năng sân bóng, thu hút nhiều
+            Chúng tôi mang đến giải pháp đặt sân hiện đại, giúp bạn khai thác tối đa tiềm năng sân, thu hút nhiều
             khách hàng hơn và đơn giản hóa việc quản lý đặt sân.
           </p>
         </div>
@@ -39,7 +39,7 @@ const OurOfferComponent = () => {
               <div id="collapseTwo" className="tab-pane fade show p-0">
                 <h1 className="display-5 mb-4">Mở Rộng Khách Hàng</h1>
                 <p className="mb-4">
-                  Đưa sân bóng của bạn tiếp cận nhiều người chơi hơn thông qua nền tảng trực tuyến, nâng cao tỷ lệ đặt
+                  Đưa sân của bạn tiếp cận nhiều người chơi hơn thông qua nền tảng trực tuyến, nâng cao tỷ lệ đặt
                   sân và gia tăng lợi nhuận.
                 </p>
               </div>

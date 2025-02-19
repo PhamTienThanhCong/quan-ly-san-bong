@@ -30,7 +30,7 @@ import { useApp } from "@quanlysanbong/app/contexts/AppContext";
 const fieldSizes = {
   5: {
     isAvailable: false,
-    name: "Sân 5 người",
+    name: "Sân Bóng Đá",
     price: 0,
     count: 0,
     timeMatch: 0,
@@ -38,7 +38,7 @@ const fieldSizes = {
   },
   7: {
     isAvailable: false,
-    name: "Sân 7 người",
+    name: "Sân Pickleball",
     price: 0,
     count: 0,
     timeMatch: 0,
@@ -46,7 +46,7 @@ const fieldSizes = {
   },
   11: {
     isAvailable: false,
-    name: "Sân 11 người",
+    name: "Sân Tennis",
     price: 0,
     count: 0,
     timeMatch: 0,
@@ -113,10 +113,10 @@ const CreateStadiumPage = () => {
         fields
       };
 
-      // Gửi request thêm sân bóng
+      // Gửi request thêm sân
       const res = await SendRequest("POST", "/api/stadiums", data);
 
-      toast.success("Thêm sân bóng thành công");
+      toast.success("Thêm sân thành công");
       // reset form
       setStadiumName("");
       setDescription("");
@@ -132,10 +132,10 @@ const CreateStadiumPage = () => {
   };
 
   return (
-    <PageContainer title="Thêm sân bóng" description="Trang thêm sân bóng mới vào hệ thống">
+    <PageContainer title="Thêm sân" description="Trang thêm sân mới vào hệ thống">
       <DashboardCard
-        title="Thêm sân bóng mới"
-        subtitle="Vui lòng điền thông tin sân bóng vào form dưới đây, Chúng tôi sẽ giúp bạn thu cọc 30% giá trị sân bóng"
+        title="Thêm sân mới"
+        subtitle="Vui lòng điền thông tin sân vào form dưới đây, Chúng tôi sẽ giúp bạn thu cọc 30% giá trị sân"
       >
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -203,7 +203,7 @@ const CreateStadiumPage = () => {
           />
 
           <Button variant="contained" sx={{ marginTop: 2, marginLeft: 3 }} onClick={handleSubmit}>
-            Thêm sân bóng
+            Thêm sân
           </Button>
         </Grid>
       </DashboardCard>

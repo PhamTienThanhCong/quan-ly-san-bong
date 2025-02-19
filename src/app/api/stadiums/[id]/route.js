@@ -6,7 +6,7 @@ import { validateToken } from "@quanlysanbong/lib/auth";
 const DB_NAME = "stadiums";
 const COLLECTION_NAME = "stadium";
 
-// API GET - Lấy danh sách sân bóng
+// API GET - Lấy danh sách sân
 export async function GET(req, { params }) {
   try {
     const client = await clientPromise;
@@ -21,7 +21,7 @@ export async function GET(req, { params }) {
     let stadium = await stadiumsCollection.findOne({ _id: getObjectId(id) });
 
     if (!stadium) {
-      return NextResponse.json({ success: false, error: "Không tìm thấy sân bóng" }, { status: 404 });
+      return NextResponse.json({ success: false, error: "Không tìm thấy sân" }, { status: 404 });
     }
 
     const user = await accountsCollection.findOne({ _id: stadium.ownerId });

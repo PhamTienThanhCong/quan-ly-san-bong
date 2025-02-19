@@ -53,7 +53,7 @@ const TestimonialComponent = () => {
           <h4 className="text-primary">Đánh Giá</h4>
           <h1 className="display-5 mb-4">Khách Hàng Nói Gì Về Chúng Tôi?</h1>
           <p className="mb-0">
-            Những phản hồi thực tế từ các khách hàng đã trải nghiệm dịch vụ đặt sân bóng tại hệ thống của chúng tôi.
+            Những phản hồi thực tế từ các khách hàng đã trải nghiệm dịch vụ đặt sân tại hệ thống của chúng tôi.
             Chúng tôi luôn cam kết mang lại trải nghiệm tốt nhất cho mọi người chơi.
           </p>
         </div>

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const DB_NAME = "accounts";
 const COLLECTION_NAME = "bankings";
 
-// API GET - Lấy danh sách sân bóng
+// API GET - Lấy danh sách sân
 export async function GET() {
   try {
     const client = await clientPromise;

@@ -42,7 +42,7 @@ const FAQsComponent = () => {
           <h4 className="text-primary">Câu Hỏi Thường Gặp</h4>
           <h1 className="display-5 mb-4">Giải Đáp Những Thắc Mắc Của Bạn</h1>
           <p className="mb-0">
-            Chúng tôi đã tổng hợp những câu hỏi phổ biến nhất để giúp bạn hiểu rõ hơn về hệ thống đặt sân bóng và các
+            Chúng tôi đã tổng hợp những câu hỏi phổ biến nhất để giúp bạn hiểu rõ hơn về hệ thống đặt sân và các
             dịch vụ chúng tôi cung cấp.
           </p>
         </div>

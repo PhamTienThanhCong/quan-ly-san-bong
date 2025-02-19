@@ -33,7 +33,7 @@ export default function Home() {
         <div className="container">
           <div className="text-center mx-auto pb-3 wow fadeInUp" data-wow-delay="0.2s" style={{ maxWidth: "800px" }}>
             <h4 className="text-primary">Sân bóng phổ biến</h4>
-            <h1 className="display-5">Các sân bóng phổ biến tại Hà Nội</h1>
+            <h1 className="display-5">Các sân phổ biến tại Hà Nội</h1>
           </div>
           <div className="row g-3">
             {fields.map((field) => (

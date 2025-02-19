@@ -90,7 +90,7 @@ const SelectStadiumComponent = ({ fields, setFields, openingTime, closingTime })
                   fontWeight: "500"
                 }}
               >
-                Loại sân {fieldIndex} người
+                {fields[fieldIndex].name}
               </Typography>
 
               {/* form checkbox */}

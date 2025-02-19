@@ -63,7 +63,7 @@ const BookingHistoryPage = () => {
   };
 
   return (
-    <PageContainer title="Lịch sử đặt sân" description="Danh sách các sân bóng bạn đã đặt">
+    <PageContainer title="Lịch sử đặt sân" description="Danh sách các sân bạn đã đặt">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4">Lịch sử đặt sân</Typography>
         <Button variant="contained" color="primary" onClick={handleReload}>

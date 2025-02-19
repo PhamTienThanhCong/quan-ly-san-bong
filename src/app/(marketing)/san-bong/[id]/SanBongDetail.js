@@ -69,7 +69,8 @@ const SanBongDetail = () => {
               ))}
           </ul>
           <p>
-            <strong>Chủ sân:</strong> {stadiumData.owner.name} ({stadiumData.owner.phone})
+            <strong>Chủ sân:</strong> {stadiumData.owner.name}{" "}
+            {stadiumData.owner.phone && `(${stadiumData.owner.phone})`}
           </p>
           {currentUser && currentUser.role === ROLE_MANAGER.USER && (
             <button className="btn btn-primary mt-3" onClick={handleOrder}>
@@ -82,7 +83,6 @@ const SanBongDetail = () => {
               <button className="btn btn-primary mt-3">Đăng nhập để đặt sân</button>
             </Link>
           )}
-
         </div>
         <div className="col-md-6">
           {stadiumData && (

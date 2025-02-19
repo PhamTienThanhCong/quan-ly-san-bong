@@ -36,7 +36,9 @@ const SanBongModal = () => {
   // Filter fields based on area and size
   const filteredFields = fields.filter((field) => {
     const matchesArea = areaFilter ? field.location.includes(areaFilter) : true;
-    return matchesArea;
+    if (sizeFilter === "") return matchesArea;
+    const matchesType = field.fields[sizeFilter].isAvailable;
+    return matchesArea && matchesType;
   });
 
   // Paginate fields
@@ -49,15 +51,15 @@ const SanBongModal = () => {
       <div className="container py-5">
         {/* Filters Section */}
         <div className="row mb-2">
-          <SearchAddressComponent onSearch={setAreaFilter} className="col-md-4 mb-2" />
-          {/* <div className="col-md-3 mb-2">
+          <SearchAddressComponent onSearch={setAreaFilter} className="col-md-3 mb-2" />
+          <div className="col-md-3 mb-2">
             <select className="form-select" value={sizeFilter} onChange={handleSizeFilterChange}>
-              <option value="">Kích thước sân</option>
-              <option value="5">5 người</option>
-              <option value="7">7 người</option>
-              <option value="11">11 người</option>
+              <option value="">Loại sân</option>
+              <option value="5">Sân Bóng</option>
+              <option value="7">Sân Pickleball</option>
+              <option value="11">Sân Tennis</option>
             </select>
-          </div> */}
+          </div>
         </div>
 
         {/* Fields List */}

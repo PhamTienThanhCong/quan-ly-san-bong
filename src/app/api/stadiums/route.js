@@ -6,7 +6,7 @@ import { validateToken } from "@quanlysanbong/lib/auth";
 const DB_NAME = "stadiums";
 const COLLECTION_NAME = "stadium";
 
-// API GET - Lấy danh sách sân bóng
+// API GET - Lấy danh sách sân
 export async function GET(req) {
   try {
     const client = await clientPromise;
@@ -31,7 +31,7 @@ export async function GET(req) {
   }
 }
 
-// API POST - Tạo một sân bóng mới
+// API POST - Tạo một sân mới
 export async function POST(req) {
   try {
     const client = await clientPromise;
@@ -61,13 +61,13 @@ export async function POST(req) {
 
     await stadiumsCollection.insertOne(newStadium);
 
-    return NextResponse.json({ success: true, message: "Tạo sân bóng thành công", data: newStadium });
+    return NextResponse.json({ success: true, message: "Tạo sân thành công", data: newStadium });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
 
-// API PUT - Cập nhật thông tin sân bóng
+// API PUT - Cập nhật thông tin sân
 export async function PUT(req) {
   try {
     const client = await clientPromise;
@@ -113,13 +113,13 @@ export async function PUT(req) {
       }
     );
 
-    return NextResponse.json({ success: true, message: "Cập nhật sân bóng thành công" });
+    return NextResponse.json({ success: true, message: "Cập nhật sân thành công" });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
 
-// API DELETE - Xóa sân bóng
+// API DELETE - Xóa sân
 export async function DELETE(req) {
   try {
     const client = await clientPromise;
@@ -136,7 +136,7 @@ export async function DELETE(req) {
 
     await stadiumsCollection.deleteOne({ _id: ObjectId });
 
-    return NextResponse.json({ success: true, message: "Xóa sân bóng thành công" });
+    return NextResponse.json({ success: true, message: "Xóa sân thành công" });
   } catch (error) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

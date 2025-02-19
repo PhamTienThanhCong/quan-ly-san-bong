@@ -79,7 +79,7 @@ const HistoryBookingComponent = ({ currentUser }) => {
               <td>Sân {booking.field}</td>
               <td>{booking.time}</td>
               <td>{formatCurrency(booking.deposit)}</td>
-              <td>{formatCurrency(booking.deposit)}</td>
+              <td>{formatCurrency(booking.remaining)}</td>
               <td>{convertDateTime(booking.created_at)}</td>
               <td>
                 <div className="d-flex justify-content-center">

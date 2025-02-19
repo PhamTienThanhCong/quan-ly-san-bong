@@ -67,9 +67,9 @@ const StadiumListPage = () => {
   };
 
   return (
-    <PageContainer title="Danh sách sân bóng" description="Danh sách các sân bóng hiện có">
+    <PageContainer title="Danh sách sân" description="Danh sách các sân hiện có">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4">Danh sách sân bóng</Typography>
+        <Typography variant="h4">Danh sách sân</Typography>
         <Button variant="contained" color="primary" onClick={handleReload}>
           Tải lại
         </Button>
@@ -80,6 +80,11 @@ const StadiumListPage = () => {
         </Box>
       ) : (
         <Grid container spacing={3}>
+          {currentItems.length === 0 && (
+            <Grid item xs={12}>
+              <Typography variant="body1">Không có sân nào</Typography>
+            </Grid>
+          )}
           {currentItems.map((stadium) => (
             <Grid item xs={12} md={6} lg={4} key={stadium._id}>
               <Card>

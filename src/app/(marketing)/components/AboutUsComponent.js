@@ -9,9 +9,9 @@ const AboutUsComponent = () => {
           <div className="col-xl-7 wow fadeInLeft" data-wow-delay="0.2s">
             <div>
               <h4 className="text-primary">Về Chúng Tôi</h4>
-              <h1 className="display-5 mb-4">Đặt sân bóng dễ dàng - Trải nghiệm tuyệt vời</h1>
+              <h1 className="display-5 mb-4">Đặt sân dễ dàng - Trải nghiệm tuyệt vời</h1>
               <p className="mb-4">
-                Chúng tôi cung cấp hệ thống đặt sân bóng đá trực tuyến nhanh chóng, giúp bạn dễ dàng tìm kiếm và thuê
+                Chúng tôi cung cấp hệ thống đặt sân đá trực tuyến nhanh chóng, giúp bạn dễ dàng tìm kiếm và thuê
                 sân với chất lượng tốt nhất.
               </p>
               <div className="row g-4">
@@ -33,7 +33,7 @@ const AboutUsComponent = () => {
                     </div>
                     <div className="ms-4">
                       <h4>Nhiều Năm Kinh Nghiệm</h4>
-                      <p>Chúng tôi có kinh nghiệm trong việc quản lý và cho thuê sân bóng.</p>
+                      <p>Chúng tôi có kinh nghiệm trong việc quản lý và cho thuê sân.</p>
                     </div>
                   </div>
                 </div>

@@ -33,12 +33,12 @@ const Register = () => {
               <AuthRegister
                 subtext={
                   <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                    Đăng nhập vào trang quản lý sân bóng của bạn
+                    Đăng nhập vào trang quản lý sân của bạn
                   </Typography>
                 }
                 subtitle={
                   <Typography variant="subtitle1" textAlign="center" color="textSecondary" mt={1}>
-                    Nếu bạn có sân bóng và muốn quản lý sân bóng của mình, hãy đăng ký tài khoản{" "}
+                    Nếu bạn có sân và muốn quản lý sân của mình, hãy đăng ký tài khoản{" "}
                     <Link href="/chu-san/dang-ky">tại đây</Link>
                   </Typography>
                 }
