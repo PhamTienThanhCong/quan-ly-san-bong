@@ -16,6 +16,14 @@ async function readFile(file) {
   return Buffer.from(arrayBuffer);
 }
 
+export async function GET() {
+  try {
+    return NextResponse.json({ message: "Success" });
+  } catch (error) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
 // Xử lý API route
 export async function POST(req) {
   try {
