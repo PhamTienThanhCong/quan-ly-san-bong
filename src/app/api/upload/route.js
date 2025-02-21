@@ -3,9 +3,6 @@ import { NextResponse } from "next/server";
 import { Readable } from "stream";
 import { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME } from "@quanlysanbong/constants/MainContent";
 
-export const config = {
-  runtime: "nodejs",
-};
 
 // Cấu hình Cloudinary
 cloudinary.config({
