@@ -57,7 +57,7 @@ const SanBongModal = () => {
               <option value="">Loại sân</option>
               <option value="5">Sân Bóng</option>
               <option value="7">Sân Pickleball</option>
-              <option value="11">Sân Tennis</option>
+              <option value="11">Sân Cầu lông</option>
             </select>
           </div>
         </div>

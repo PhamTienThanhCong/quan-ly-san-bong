@@ -46,7 +46,7 @@ const fieldSizes = {
   },
   11: {
     isAvailable: false,
-    name: "Sân Tennis",
+    name: "Sân cầu lông",
     price: 0,
     count: 0,
     timeMatch: 0,
