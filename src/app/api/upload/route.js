@@ -7,7 +7,7 @@ import { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME } from
 cloudinary.config({
   api_key: CLOUDINARY_API_KEY,
   api_secret: CLOUDINARY_API_SECRET,
-  cloud_name: CLOUDINARY_CLOUD_NAME
+  cloud_name: CLOUDINARY_CLOUD_NAME,
 });
 
 // Hàm đọc file từ FormData
@@ -17,14 +17,9 @@ async function readFile(file) {
 }
 
 export async function GET() {
-  try {
-    return NextResponse.json({ message: "Success" });
-  } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
-  }
+  return NextResponse.json({ message: "Success" });
 }
 
-// Xử lý API route
 export async function POST(req) {
   try {
     const formData = await req.formData();
@@ -34,11 +29,8 @@ export async function POST(req) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Chuyển file thành buffer
     const buffer = await readFile(file);
 
-    // Tạo Promise để chờ Cloudinary upload hoàn tất
-    // eslint-disable-next-line no-undef
     const uploadPromise = new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream({ folder: "uploads" }, (error, result) => {
         if (error) reject(error);
@@ -48,7 +40,6 @@ export async function POST(req) {
       Readable.from(buffer).pipe(uploadStream);
     });
 
-    // Chờ upload hoàn thành
     const result = await uploadPromise;
 
     return NextResponse.json({ url: result.secure_url }, { status: 200 });
@@ -56,4 +47,18 @@ export async function POST(req) {
     console.error("Upload Error:", error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  return NextResponse.json(
+    {},
+    {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    }
+  );
 }
