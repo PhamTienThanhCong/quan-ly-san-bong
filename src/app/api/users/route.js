@@ -36,7 +36,7 @@ export async function POST(req) {
     const db = client.db("accounts"); // Tên database của bạn
     const accountsCollection = db.collection("users");
 
-    const { email, password, address, name, role = ROLE_MANAGER.USER } = await req.json();
+    const { email, password, address, name, role = ROLE_MANAGER.USER, phone = "" } = await req.json();
 
     // role phải thuộc ROLE_MANAGER
     if (!Object.values(ROLE_MANAGER).includes(role)) {

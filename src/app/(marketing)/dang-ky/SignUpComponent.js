@@ -14,6 +14,7 @@ const SignUpComponent = () => {
     name: "",
     province: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: "",
     acceptTerms: false
@@ -38,6 +39,9 @@ const SignUpComponent = () => {
       validationErrors.email = "Email là bắt buộc.";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       validationErrors.email = "Email không hợp lệ.";
+    }
+    if (!formData.phone) {
+      validationErrors.phone = "Số điện thoại là bắt buộc.";
     }
     if (!formData.password) {
       validationErrors.password = "Mật khẩu là bắt buộc.";
@@ -72,6 +76,7 @@ const SignUpComponent = () => {
           name: "",
           province: "",
           email: "",
+          phone: "",
           password: "",
           confirmPassword: "",
           acceptTerms: false
@@ -152,6 +157,23 @@ const SignUpComponent = () => {
                       required
                     />
                     {errors.email && <div className="text-danger">{errors.email}</div>}
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                      Số điện thoại
+                    </label>
+                    <input
+                      disabled={loading}
+                      type="phone"
+                      className="form-control"
+                      id="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="Nhập sdt của bạn"
+                      required
+                    />
+                    {errors.phone && <div className="text-danger">{errors.phone}</div>}
                   </div>
 
                   <div className="mb-3">

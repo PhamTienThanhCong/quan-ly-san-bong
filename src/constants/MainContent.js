@@ -1,14 +1,14 @@
 export const WEB_NAME = "SPOK ";
 
-export const MAIN_URL_APP = "localhost:3000";
+export const MAIN_URL_APP = "spokvn.vercel.app";
 
 export const VIDEO_LINK = "https://www.youtube.com/watch?v=Ig8IU9vsPo4";
 
-export const PHONE_NUMBER = "+01234567890";
+export const PHONE_NUMBER = "0853470305";
 
 export const EMAIL = "thuebongda@gmail.com";
 
-export const ADDRESS = "123 Đường Phố, Thành phố H, Việt Nam";
+export const ADDRESS = "Thạch Hòa, Thạch Thất, Hà Nội";
 
 export const CRYPTO_IV = "lStIPhA0My";
 export const CRYPTO_KEY = "fqrHTmhkD4xwwWjV";

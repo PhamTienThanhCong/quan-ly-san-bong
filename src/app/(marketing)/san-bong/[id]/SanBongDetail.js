@@ -73,7 +73,7 @@ const SanBongDetail = () => {
             {stadiumData.owner.phone && `(${stadiumData.owner.phone})`}
           </p>
           {currentUser && currentUser.role === ROLE_MANAGER.USER && (
-            <button className="btn btn-primary mt-3" onClick={handleOrder}>
+            <button className="btn btn-primary w-100 btn-lg" onClick={handleOrder}>
               Đặt sân ngay
             </button>
           )}

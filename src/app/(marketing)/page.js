@@ -9,6 +9,7 @@ import OurTeamComponent from "./components/OurTeamComponent";
 import TestimonialComponent from "./components/TestimonialComponent";
 import META_DATA from "./metaData";
 import BoxFieldComponent from "./components/BoxFieldComponent";
+import SanBongNoiBatComponent from "./components/SanBongNoiBatComponent";
 
 export const metadata = {
   title: `${META_DATA.TITLE}`,
@@ -47,9 +48,11 @@ export default function Home() {
 
       <OurOfferComponent />
 
+      <SanBongNoiBatComponent />
+
       <FAQsComponent />
 
-      <OurTeamComponent />
+      {/* <OurTeamComponent /> */}
 
       <TestimonialComponent />
 
