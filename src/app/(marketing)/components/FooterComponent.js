@@ -9,7 +9,7 @@ const FooterComponent = () => {
           style={{ border: "1px solid rgba(255, 255, 255, 0.08)" }}
         >
           <div className="row g-5">
-            <div className="col-md-6 col-lg-6 col-xl-4">
+            <div className="col-6">
               <div className="footer-item">
                 <a href="#" className="p-0" style={{ pointerEvents: "none" }}>
                   <h4 className="text-white">
@@ -47,53 +47,7 @@ const FooterComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6 col-lg-6 col-xl-2">
-              <div className="footer-item">
-                <h4 className="text-white mb-4">Liên kết nhanh</h4>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Về chúng tôi
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Dịch vụ
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Sân bóng
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Giá cả
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Blog
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Liên hệ
-                </a>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-6 col-xl-3">
-              <div className="footer-item">
-                <h4 className="text-white mb-4">Hỗ trợ</h4>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Chính sách bảo mật
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Điều khoản & Điều kiện
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Miễn trừ trách nhiệm
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Hỗ trợ khách hàng
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Câu hỏi thường gặp
-                </a>
-                <a href="#" style={{ pointerEvents: "none" }}>
-                  <i className="fas fa-angle-right me-2"></i> Trợ giúp
-                </a>
-              </div>
-            </div>
-            <div className="col-md-6 col-lg-6 col-xl-3">
+            <div className="col-6">
               <div className="footer-item">
                 <h4 className="text-white mb-4">Thông tin liên hệ</h4>
                 <div className="d-flex align-items-center">
