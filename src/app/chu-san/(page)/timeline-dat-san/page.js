@@ -104,7 +104,7 @@ const TimelineHistoryPage = () => {
                               (b) => b.time === time && b.field === fieldId && b.stadiumId === stadium._id
                             );
                             return (
-                              <Grid item xs={12} sm={6} md={4} key={time}>
+                              <Grid item xs={12} sm={6} md={3} key={time}>
                                 <Paper
                                   elevation={matchingBookings.length > 0 ? 3 : 1}
                                   onClick={() => matchingBookings.length > 0 && handleBookingClick(matchingBookings)}
