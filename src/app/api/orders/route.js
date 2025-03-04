@@ -24,6 +24,7 @@ export async function GET(req) {
     const userId = searchParams.get("userId");
     const stadiumId = searchParams.get("stadiumId");
     const ownerId = searchParams.get("ownerId");
+    const date = searchParams.get("date");
 
     // Build the search query dynamically based on the provided parameters
     const searchQuery = {
@@ -32,6 +33,12 @@ export async function GET(req) {
     if (userId) searchQuery.userId = getObjectId(userId);
     if (stadiumId) searchQuery.stadiumId = getObjectId(stadiumId);
     if (ownerId) searchQuery.ownerId = getObjectId(ownerId);
+    let projection = { stadiumName: 1, location: 1, locationDetail: 1, openingTime: 1, closingTime: 1 };
+    if (date) {
+      searchQuery.date = date;
+      projection = { ...projection, fields: 1 };
+    }
+    // fields
 
     // Fetch the orders based on the search query, if any filters were provided
     let orders = await ordersCollection
@@ -44,12 +51,7 @@ export async function GET(req) {
     const userIds = orders.map((order) => order.userId);
 
     // Fetch all the stadiums
-    const stadiums = await stadiumCollection
-      .find(
-        { _id: { $in: stadiumIds } },
-        { projection: { stadiumName: 1, location: 1, locationDetail: 1, openingTime: 1, closingTime: 1 } }
-      )
-      .toArray();
+    const stadiums = await stadiumCollection.find({ _id: { $in: stadiumIds } }, { projection: projection }).toArray();
 
     // Fetch all the users
     const users = await accountsCollection

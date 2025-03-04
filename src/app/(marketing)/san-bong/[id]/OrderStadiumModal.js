@@ -5,6 +5,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { formatCurrency } from "@quanlysanbong/utils/Main";
 import SendRequest from "@quanlysanbong/utils/SendRequest";
 import { WEB_NAME } from "@quanlysanbong/constants/MainContent";
+import Link from "next/link";
 
 const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
   const [selectedDate, setSelectedDate] = useState(""),
@@ -117,7 +118,7 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
             // Perform async check
             const _check = await checkOrder(res.payload);
 
-            if (_check) {
+            if (!_check) {
               // If the order is confirmed, clear the interval
               clearInterval(timeId);
 
@@ -244,9 +245,14 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
       </Modal.Body>
       <Modal.Footer>
         {orderDone ? (
-          <Button variant="secondary" onClick={onClose}>
-            Đóng
-          </Button>
+          <>
+            <Link href="/trang-ca-nhan">
+              <Button variant="primary">Xem lịch sử đặt sân</Button>
+            </Link>
+            <Button variant="secondary" onClick={onClose}>
+              Đóng
+            </Button>
+          </>
         ) : (
           <>
             <Button variant="secondary" onClick={onClose}>

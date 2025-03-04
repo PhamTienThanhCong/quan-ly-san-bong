@@ -60,6 +60,7 @@ export async function POST(req) {
       password: hashedPassword,
       name,
       address,
+      phone,
       role,
       totalPrice: 0,
       withdrawn: 0,

@@ -80,7 +80,7 @@ const SanBongDetail = () => {
 
           {Object.keys(currentUser).length === 0 && (
             <Link href="/dang-nhap">
-              <button className="btn btn-primary mt-3">Đăng nhập để đặt sân</button>
+              <button className="btn btn-primary mt-3 w-100 btn-lg">Đăng nhập để đặt sân</button>
             </Link>
           )}
         </div>
