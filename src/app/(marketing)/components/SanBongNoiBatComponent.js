@@ -22,7 +22,7 @@ const SanBongNoiBatComponent = () => {
 
   return (
     <div className="container-fluid contact">
-      <div className="container pb-5">
+      <div className="container pt-5 pb-2">
         <div className="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style={{ maxWidth: "800px" }}>
           <h1 className="display-5 mb-4">Các sân tiêu biểu</h1>
           <p className="mb-0">
