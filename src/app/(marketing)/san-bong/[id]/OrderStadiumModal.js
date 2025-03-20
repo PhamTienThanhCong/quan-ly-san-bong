@@ -118,7 +118,7 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
             // Perform async check
             const _check = await checkOrder(res.payload);
 
-            if (!_check) {
+            if (_check) {
               // If the order is confirmed, clear the interval
               clearInterval(timeId);
 
