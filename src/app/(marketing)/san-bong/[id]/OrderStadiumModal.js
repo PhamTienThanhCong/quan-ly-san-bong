@@ -34,9 +34,9 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
     const content = `cat coc ${orderSuccess._id}`;
 
     const payload = {
-      accountNo: "0396396332",
+      accountNo: "2153806752",
       accountName: `${WEB_NAME} dat coc`,
-      acqId: 970422,
+      acqId: 970418,
       amount: orderSuccess.deposit,
       addInfo: content,
       format: "text",
