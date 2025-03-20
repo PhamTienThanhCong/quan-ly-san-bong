@@ -28,6 +28,7 @@ export const metadata = {
 export default function Home() {
   return (
     <div>
+      <SanBongNoiBatComponent />
       <AboutUsComponent />
 
       {/* <div className="container-fluid service pb-5">
@@ -48,7 +49,6 @@ export default function Home() {
 
       <OurOfferComponent />
 
-      <SanBongNoiBatComponent />
 
       <FAQsComponent />
 
