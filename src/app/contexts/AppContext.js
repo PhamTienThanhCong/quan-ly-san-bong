@@ -34,7 +34,9 @@ export function AppProvider({ children }) {
 
             // redirect to/login page
             setLoading(false);
-            window.location.href = "/login";
+            // remove token
+            localStorage.removeItem("token");
+            window.location.href = "/dang-nhap";
           }
         } catch (error) {
           console.error("Error during fetching user data:", error);

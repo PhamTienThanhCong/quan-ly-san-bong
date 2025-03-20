@@ -43,16 +43,16 @@ const OrderStadiumModal = ({ open, onClose, stadiumData }) => {
       template: "compact2"
     };
 
-    const res = await fetch("https://api.vietqr.io/v2/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
+    // const res = await fetch("https://api.vietqr.io/v2/generate", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(payload)
+    // });
 
-    const data = await res.json();
-    setQrCode(data.data.qrDataURL);
+    // const data = await res.json();
+    setQrCode(`https://qr.sepay.vn/img?acc=9624720052003&bank=BIDV&amount=${orderSuccess.deposit}&des=${content}&template=compact2`);
   };
 
   const today = new Date();
