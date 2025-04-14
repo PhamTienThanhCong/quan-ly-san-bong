@@ -19,8 +19,6 @@ export const CLOUDINARY_API_SECRET = "9s6ZvaNPMttubdvUUrb9WHPyOyU";
 export const CLOUDINARY_API_KEY = "337372918935683";
 export const CLOUDINARY_CLOUD_NAME = "dxjutbrpy";
 
-// pass: otYVcXj2TwwRHznX user: spok
-
 export const OUR_TEAM = [
   {
     id: 1,
