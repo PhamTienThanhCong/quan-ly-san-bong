@@ -10,14 +10,13 @@ export const EMAIL = "thuebongda@gmail.com";
 
 export const ADDRESS = "Thạch Hòa, Thạch Thất, Hà Nội";
 
-export const CRYPTO_IV = "lStIPhA0My";
-export const CRYPTO_KEY = "fqrHTmhkD4xwwWjV";
-export const MONGODB_CONNECT =
-  "mongodb+srv://spok:otYVcXj2TwwRHznX@spok.9vesq.mongodb.net/?retryWrites=true&w=majority&appName=spok";
+export const CRYPTO_IV = process.env.NEXT_PUBLIC_CRYPTO_IV 
+export const CRYPTO_KEY = process.env.NEXT_PUBLIC_CRYPTO_KEY 
+export const MONGODB_CONNECT = process.env.NEXT_PUBLIC_MONGODB_CONNECT;
 
-export const CLOUDINARY_API_SECRET = "9s6ZvaNPMttubdvUUrb9WHPyOyU";
-export const CLOUDINARY_API_KEY = "337372918935683";
-export const CLOUDINARY_CLOUD_NAME = "dxjutbrpy";
+export const CLOUDINARY_API_SECRET = process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
+export const CLOUDINARY_API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
+export const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 
 export const OUR_TEAM = [
   {
