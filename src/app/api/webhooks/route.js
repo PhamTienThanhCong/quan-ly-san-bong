@@ -11,7 +11,11 @@ export async function GET() {
     const db = client.db(DB_NAME);
     const bankingsCollection = db.collection(COLLECTION_NAME);
 
-    const bankings = await bankingsCollection.find({}).sort({ created_at: -1 }).toArray();
+    const bankings = await bankingsCollection
+      .find({})
+      .sort({ transactionDate: -1 }) 
+      .limit(10)
+      .toArray();
 
     return NextResponse.json({ success: true, data: bankings });
   } catch (error) {
